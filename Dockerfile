@@ -2,14 +2,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copiar archivos del proyecto
-COPY *.csproj .
-RUN dotnet restore
+COPY MiWeb/*.csproj ./MiWeb/
+RUN dotnet restore ./MiWeb/MiWeb.csproj
 
 # Copiar el resto del código
-COPY . .
+COPY MiWeb/ ./MiWeb/
 
 # Publicar la aplicación
-RUN dotnet publish -c Release -o out
+RUN dotnet publish ./MiWeb/MiWeb.csproj -c Release -o out
 
 # Segunda etapa: Imagen de runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime

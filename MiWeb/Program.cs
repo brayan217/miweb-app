@@ -6,7 +6,11 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// ⭐ ACTIVAR PROGRESSIVE WEB APP (PWA)
+builder.Services.AddProgressiveWebApp();
 
 // Configuración de sesión
 builder.Services.AddDistributedMemoryCache();
@@ -72,10 +76,30 @@ using (var scope = app.Services.CreateScope())
     {
         var productos = new List<Producto>
         {
-            new Producto { Nombre = "ASUS ROG Strix G18", Descripcion = "Laptop gamer de alto rendimiento", Precio = 22000, Cantidad = 10 },
-            new Producto { Nombre = "ROG Phone 8", Descripcion = "Smartphone gamer definitivo", Precio = 15500, Cantidad = 15 },
-            new Producto { Nombre = "ROG Swift OLED", Descripcion = "Monitor 4K 240Hz", Precio = 12800, Cantidad = 8 },
-            new Producto { Nombre = "ROG Azoth", Descripcion = "Teclado mecánico inalámbrico", Precio = 3200, Cantidad = 20 }
+            new Producto { 
+                Nombre = "ASUS ROG Strix G18", 
+                Descripcion = "Laptop gamer de alto rendimiento", 
+                Precio = 22000, 
+                Cantidad = 10 
+            },
+            new Producto { 
+                Nombre = "ROG Phone 8", 
+                Descripcion = "Smartphone gamer definitivo", 
+                Precio = 15500, 
+                Cantidad = 15 
+            },
+            new Producto { 
+                Nombre = "ROG Swift OLED", 
+                Descripcion = "Monitor 4K 240Hz", 
+                Precio = 12800, 
+                Cantidad = 8 
+            },
+            new Producto { 
+                Nombre = "ROG Azoth", 
+                Descripcion = "Teclado mecánico inalámbrico", 
+                Precio = 3200, 
+                Cantidad = 20 
+            }
         };
         context.Productos.AddRange(productos);
         context.SaveChanges();

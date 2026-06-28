@@ -1,25 +1,41 @@
 ﻿@{
-    ViewData["Title"] = "Iniciar Sesión";
+    ViewData["Title"] = "Iniciar Sesión - NEO STORE";
 }
 
 <style>
     .login-container {
-        background: #0a0a0a;
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 40px 20px;
-        font-family: 'Inter', sans-serif;
+        background: #090909;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: -30%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(0,207,255,0.02) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
     }
 
     .login-card {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 20px;
+        background: rgba(18, 18, 30, 0.4);
+        border: 1px solid rgba(255,255,255,0.02);
+        border-radius: 24px;
         padding: 50px 40px;
-        max-width: 450px;
+        max-width: 420px;
         width: 100%;
+        backdrop-filter: blur(20px);
+        position: relative;
+        z-index: 1;
     }
 
     .login-card .logo {
@@ -28,20 +44,23 @@
     }
 
     .login-card .logo h1 {
-        color: #fff;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
         font-size: 2rem;
-        font-weight: 800;
+        color: #fff;
         letter-spacing: -1px;
     }
 
     .login-card .logo h1 span {
-        color: #ff0044;
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .login-card .logo p {
-        color: rgba(255,255,255,0.3);
-        font-size: 0.9rem;
-        margin-top: 5px;
+        color: rgba(255,255,255,0.05);
+        font-size: 0.85rem;
+        letter-spacing: 1px;
     }
 
     .login-card .form-group {
@@ -49,16 +68,18 @@
     }
 
     .login-card label {
-        color: rgba(255,255,255,0.6);
+        color: rgba(255,255,255,0.15);
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         margin-bottom: 6px;
         display: block;
     }
 
     .login-card .form-control {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.03);
         border-radius: 12px;
         color: #fff;
         padding: 14px 18px;
@@ -69,13 +90,13 @@
 
     .login-card .form-control:focus {
         outline: none;
-        border-color: #ff0044;
-        box-shadow: 0 0 0 4px rgba(255,0,68,0.1);
-        background: rgba(255,255,255,0.08);
+        border-color: #00CFFF;
+        box-shadow: 0 0 0 4px rgba(0,207,255,0.02);
+        background: rgba(255,255,255,0.03);
     }
 
     .login-card .form-control::placeholder {
-        color: rgba(255,255,255,0.2);
+        color: rgba(255,255,255,0.03);
     }
 
     .login-card .form-check {
@@ -86,145 +107,130 @@
     }
 
     .login-card .form-check input[type="checkbox"] {
-        accent-color: #ff0044;
+        accent-color: #00CFFF;
         width: 18px;
         height: 18px;
+        cursor: pointer;
     }
 
     .login-card .form-check label {
-        color: rgba(255,255,255,0.4);
-        font-size: 0.9rem;
+        color: rgba(255,255,255,0.06);
+        font-size: 0.8rem;
+        cursor: pointer;
         margin: 0;
+        text-transform: none;
     }
 
-    .btn-login {
-        background: linear-gradient(135deg, #ff0044, #ff6b35);
+    .btn-login-neon {
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
         color: #fff;
         border: none;
         border-radius: 50px;
         padding: 16px;
         font-weight: 700;
-        font-size: 1.05rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
         width: 100%;
         transition: all 0.3s ease;
         cursor: pointer;
+        margin-top: 10px;
     }
 
-    .btn-login:hover {
+    .btn-login-neon:hover {
         transform: translateY(-3px);
-        box-shadow: 0 0 40px rgba(255,0,68,0.3);
+        box-shadow: 0 0 40px rgba(0,207,255,0.1);
     }
 
     .login-footer {
         text-align: center;
         margin-top: 25px;
         padding-top: 20px;
-        border-top: 1px solid rgba(255,255,255,0.05);
+        border-top: 1px solid rgba(255,255,255,0.02);
     }
 
     .login-footer a {
-        color: rgba(255,255,255,0.4);
+        color: rgba(255,255,255,0.04);
         text-decoration: none;
         transition: all 0.3s ease;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
-    .login-footer .register-link {
-        color: #ff0044;
-        font-weight: 600;
-    }
-
-    .login-footer .register-link:hover {
-        text-decoration: underline;
-    }
-
-    .alert-custom {
-        padding: 12px 18px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .alert-danger-custom {
-        background: rgba(255,0,68,0.1);
-        border: 1px solid rgba(255,0,68,0.2);
-        color: #ff6b6b;
-    }
-
-    .alert-success-custom {
-        background: rgba(6,214,160,0.1);
-        border: 1px solid rgba(6,214,160,0.2);
-        color: #06d6a0;
+    .login-footer a:hover {
+        color: #00CFFF;
     }
 
     .credenciales-info {
-        background: rgba(255,0,68,0.05);
-        border: 1px solid rgba(255,0,68,0.1);
+        background: rgba(0,207,255,0.02);
+        border: 1px solid rgba(0,207,255,0.02);
         border-radius: 12px;
         padding: 12px 15px;
         margin-bottom: 20px;
     }
 
     .credenciales-info small {
-        color: rgba(255,255,255,0.4);
-        font-size: 0.8rem;
+        color: rgba(255,255,255,0.04);
+        font-size: 0.65rem;
+        letter-spacing: 0.3px;
     }
 
     .credenciales-info strong {
-        color: rgba(255,255,255,0.6);
+        color: rgba(255,255,255,0.06);
+    }
+
+    .credenciales-info .admin {
+        color: #00CFFF;
+    }
+
+    .credenciales-info .user {
+        color: #7A00FF;
+    }
+
+    .login-card .alert {
+        background: rgba(255,45,149,0.03);
+        border: 1px solid rgba(255,45,149,0.04);
+        color: #FF2D95;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
     }
 </style>
 
 <div class="login-container">
-    <div class="login-card">
+    <div class="login-card" data-aos="fade-up">
         <div class="logo">
-            <h1>Mi <span>Inventario</span></h1>
+            <h1>NEO <span>STORE</span></h1>
             <p>Inicia sesión para continuar</p>
         </div>
 
-        @if (TempData["Mensaje"] != null)
-        {
-            <div class="alert-custom alert-success-custom">
-                <i class="bi bi-check-circle-fill"></i>
-                @TempData["Mensaje"]
-            </div>
-        }
-
-        @if (ViewData.ModelState != null && !ViewData.ModelState.IsValid)
-        {
-            <div class="alert-custom alert-danger-custom">
-                <i class="bi bi-exclamation-triangle-fill"></i>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            </div>
-        }
-
-        <!-- Credenciales de prueba -->
         <div class="credenciales-info">
             <small>
-                <i class="bi bi-info-circle me-1"></i>
-                <strong>Admin:</strong> admin@gmail.com / admin123 &nbsp;|&nbsp;
-                <strong>Usuario:</strong> brayan@gmail.com / 123456
+                <span class="admin">●</span> <strong>Admin:</strong> admin@gmail.com / admin123 &nbsp;|&nbsp;
+                <span class="user">●</span> <strong>Usuario:</strong> brayan@gmail.com / 123456
             </small>
         </div>
 
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                @TempData["Error"]
+            </div>
+        }
+
         <form method="post" action="/Account/Login">
             <div class="form-group">
-                <label for="Email">
-                    <i class="bi bi-envelope me-1"></i> Email
-                </label>
-                <input type="email" id="Email" name="Email" class="form-control" 
-                       placeholder="tu@email.com" required />
+                <label for="Email">Email</label>
+                <input type="email" id="Email" name="Email" class="form-control" placeholder="tu@email.com" required />
             </div>
 
             <div class="form-group">
-                <label for="Contrasena">
-                    <i class="bi bi-lock me-1"></i> Contraseña
-                </label>
-                <input type="password" id="Contrasena" name="Contrasena" class="form-control" 
-                       placeholder="••••••••" required />
+                <label for="Contrasena">Contraseña</label>
+                <input type="password" id="Contrasena" name="Contrasena" class="form-control" placeholder="••••••••" required />
             </div>
 
             <div class="form-check">
@@ -232,14 +238,14 @@
                 <label for="Recordarme">Recordarme</label>
             </div>
 
-            <button type="submit" class="btn-login">
-                <i class="bi bi-box-arrow-in-right me-2"></i> Ingresar
+            <button type="submit" class="btn-login-neon">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Ingresar
             </button>
         </form>
 
         <div class="login-footer">
-            <span style="color: rgba(255,255,255,0.3);">¿No tienes cuenta?</span>
-            <a asp-action="Register" class="register-link">Regístrate</a>
+            <span style="color: rgba(255,255,255,0.02);">¿No tienes cuenta?</span>
+            <a asp-action="Register">Regístrate</a>
         </div>
     </div>
 </div>

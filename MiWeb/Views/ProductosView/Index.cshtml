@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<LOGIN.Models.Producto>
 
 @{
-    ViewData["Title"] = "Administrar Productos";
+    ViewData["Title"] = "Administrar Productos - ROG Inventory";
 }
 
 <style>
-    .admin-container {
+    .admin-rog-container {
         background: #0a0a0a;
         min-height: 100vh;
         padding: 40px 0;
@@ -13,7 +13,7 @@
         font-family: 'Inter', sans-serif;
     }
 
-    .admin-header {
+    .admin-rog-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -22,132 +22,116 @@
         gap: 15px;
     }
 
-    .admin-header h1 {
+    .admin-rog-header h1 {
         font-size: 2rem;
-        font-weight: 800;
-        margin: 0;
+        font-weight: 900;
         letter-spacing: -1px;
-        color: #1a3a5c;
-        text-shadow: 0 0 30px rgba(26,58,92,0.1);
+        margin: 0;
     }
 
-    .admin-header h1 span {
-        color: #8b0000;
+    .admin-rog-header h1 span {
+        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
-    .admin-header h1 i {
-        color: #1a3a5c;
+    .admin-rog-header h1 i {
+        color: #ff0044;
         margin-right: 10px;
     }
 
-    .btn-create {
-        background: linear-gradient(135deg, #1a3a5c, #0d1f30);
-        color: #c0d0e0;
-        border: 1px solid #2a4a6c;
+    .btn-rog-primary {
+        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        color: #fff;
+        border: none;
         border-radius: 50px;
         padding: 12px 30px;
         font-weight: 700;
         font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         transition: all 0.3s ease;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
     }
 
-    .btn-create:hover {
+    .btn-rog-primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 0 30px rgba(26,58,92,0.15);
+        box-shadow: 0 0 30px rgba(255,0,68,0.2);
         color: #fff;
-        border-color: #3a5a7c;
     }
 
-    .table-container {
-        background: rgba(10, 10, 10, 0.98);
-        border: 1px solid rgba(26,58,92,0.15);
+    .table-rog-container {
+        background: rgba(18, 18, 30, 0.6);
+        border: 1px solid rgba(255,255,255,0.03);
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+        backdrop-filter: blur(10px);
     }
 
-    .table {
-        color: #c0d0e0;
+    .table-rog {
+        color: rgba(255,255,255,0.8);
         margin: 0;
         border-collapse: collapse;
         width: 100%;
     }
 
-    .table thead {
-        background: rgba(10, 10, 10, 0.9);
-        border-bottom: 2px solid rgba(26,58,92,0.2);
+    .table-rog thead {
+        background: rgba(0,0,0,0.3);
+        border-bottom: 1px solid rgba(255,255,255,0.03);
     }
 
-    .table thead th {
-        color: #4a7a9c;
+    .table-rog thead th {
+        color: rgba(255,255,255,0.2);
         font-weight: 700;
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        padding: 18px 20px;
+        padding: 16px 20px;
         border: none;
     }
 
-    .table tbody td {
+    .table-rog tbody td {
         padding: 16px 20px;
-        border-bottom: 1px solid rgba(26,58,92,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.02);
         vertical-align: middle;
         font-size: 0.9rem;
-        color: #8aaec0;
+        color: rgba(255,255,255,0.6);
     }
 
-    .table tbody tr {
-        background: rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
+    .table-rog tbody tr:hover {
+        background: rgba(255,255,255,0.02);
     }
 
-    .table tbody tr:nth-child(even) {
-        background: rgba(0, 0, 0, 0.5);
-    }
-
-    .table tbody tr:hover {
-        background: rgba(26,58,92,0.08);
-        border-left: 2px solid #1a3a5c;
-    }
-
-    .table tbody tr:last-child td {
+    .table-rog tbody tr:last-child td {
         border-bottom: none;
     }
 
-    .product-name {
-        font-weight: 700;
-        color: #6a9ac0;
-        font-size: 0.95rem;
-        letter-spacing: -0.2px;
+    .product-name-rog {
+        font-weight: 600;
+        color: #fff;
     }
 
-    .product-desc-cell {
-        color: #5a7a8a;
+    .product-desc-rog {
+        color: rgba(255,255,255,0.15);
         font-size: 0.8rem;
-        font-weight: 400;
         max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    .product-price-cell {
-        color: #8b0000;
-        font-weight: 800;
-        font-size: 1.1rem;
-        letter-spacing: -0.3px;
+    .product-price-rog {
+        color: #ff0044;
+        font-weight: 700;
     }
 
-    .stock-badge-cell {
-        padding: 5px 16px;
+    .stock-badge-rog {
+        padding: 4px 14px;
         border-radius: 50px;
-        font-size: 0.6rem;
+        font-size: 0.55rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.8px;
@@ -155,38 +139,37 @@
         border: 1px solid transparent;
     }
 
-    .stock-badge-cell.available {
-        background: rgba(26, 58, 92, 0.1);
-        color: #4a7a9c;
-        border-color: rgba(26, 58, 92, 0.08);
+    .stock-badge-rog.available {
+        background: rgba(6, 214, 160, 0.08);
+        color: #06d6a0;
+        border-color: rgba(6, 214, 160, 0.06);
     }
 
-    .stock-badge-cell.low {
-        background: rgba(139, 0, 0, 0.08);
-        color: #8b0000;
-        border-color: rgba(139, 0, 0, 0.06);
+    .stock-badge-rog.low {
+        background: rgba(248, 150, 30, 0.08);
+        color: #f8961e;
+        border-color: rgba(248, 150, 30, 0.06);
     }
 
-    .stock-badge-cell.empty {
-        background: rgba(80, 0, 0, 0.1);
-        color: #5a0000;
-        border-color: rgba(80, 0, 0, 0.06);
+    .stock-badge-rog.empty {
+        background: rgba(239, 71, 111, 0.08);
+        color: #ef476f;
+        border-color: rgba(239, 71, 111, 0.06);
     }
 
-    /* ⭐ BOTONES ACCIÓN - AZUL OSCURO */
-    .btn-actions {
+    .btn-rog-actions {
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
         justify-content: flex-end;
     }
 
-    .btn-action {
+    .btn-rog-action {
         padding: 6px 14px;
         border-radius: 50px;
         font-size: 0.6rem;
         font-weight: 700;
-        border: 1px solid rgba(26,58,92,0.15);
+        border: 1px solid rgba(255,255,255,0.04);
         transition: all 0.3s ease;
         text-decoration: none;
         display: inline-flex;
@@ -194,105 +177,104 @@
         gap: 5px;
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        background: rgba(26, 58, 92, 0.1);
-        color: #4a7a9c;
+        background: rgba(0,0,0,0.3);
+        color: rgba(255,255,255,0.2);
     }
 
-    .btn-action:hover {
+    .btn-rog-action:hover {
         transform: translateY(-2px);
-        background: rgba(26, 58, 92, 0.2);
-        border-color: #1a3a5c;
-        color: #6a9ac0;
-        box-shadow: 0 0 20px rgba(26,58,92,0.05);
+        background: rgba(0,0,0,0.5);
     }
 
-    .empty-state {
+    .btn-rog-action.details:hover {
+        color: rgba(255,255,255,0.4);
+        border-color: rgba(255,255,255,0.06);
+    }
+
+    .btn-rog-action.edit:hover {
+        color: #4cc9f0;
+        border-color: rgba(76, 201, 240, 0.1);
+    }
+
+    .btn-rog-action.delete:hover {
+        color: #ef476f;
+        border-color: rgba(239, 71, 111, 0.1);
+    }
+
+    .empty-rog-state {
         text-align: center;
         padding: 60px 20px;
     }
 
-    .empty-state i {
+    .empty-rog-state i {
         font-size: 4rem;
-        color: rgba(26,58,92,0.03);
+        color: rgba(255,255,255,0.02);
         margin-bottom: 20px;
     }
 
-    .empty-state h3 {
-        color: rgba(26,58,92,0.08);
+    .empty-rog-state h3 {
+        color: rgba(255,255,255,0.04);
         font-weight: 300;
-        letter-spacing: 1px;
     }
 
-    .empty-state p {
-        color: rgba(26,58,92,0.04);
-        font-size: 0.9rem;
-    }
-
-    .alert-custom {
-        padding: 15px 20px;
+    .alert-rog-success {
+        background: rgba(6, 214, 160, 0.04);
+        border: 1px solid rgba(6, 214, 160, 0.06);
         border-radius: 12px;
+        padding: 15px 20px;
+        color: #06d6a0;
         margin-bottom: 20px;
         display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 0.9rem;
-        border: 1px solid transparent;
     }
 
-    .alert-success-custom {
-        background: rgba(26, 58, 92, 0.04);
-        border-color: rgba(26, 58, 92, 0.06);
-        color: #4a7a9c;
-    }
-
-    .alert-danger-custom {
-        background: rgba(139, 0, 0, 0.04);
-        border-color: rgba(139, 0, 0, 0.06);
-        color: #8b0000;
+    .alert-rog-error {
+        background: rgba(239, 71, 111, 0.04);
+        border: 1px solid rgba(239, 71, 111, 0.06);
+        border-radius: 12px;
+        padding: 15px 20px;
+        color: #ef476f;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
     @@media (max-width: 768px) {
-        .admin-header {
+        .admin-rog-header {
             flex-direction: column;
             align-items: stretch;
             text-align: center;
         }
 
-        .table-container {
+        .table-rog-container {
             overflow-x: auto;
         }
 
-        .btn-actions {
+        .btn-rog-actions {
             flex-direction: column;
             align-items: stretch;
         }
 
-        .btn-action {
+        .btn-rog-action {
             justify-content: center;
-        }
-
-        .admin-header h1 {
-            font-size: 1.5rem;
-        }
-
-        .product-desc-cell {
-            max-width: 80px;
         }
     }
 </style>
 
-<div class="admin-container">
+<div class="admin-rog-container">
     <div class="container">
-        <div class="admin-header">
-            <h1><i class="bi bi-gear me-2"></i>Administrar <span>Productos</span></h1>
-            <a asp-action="Create" class="btn-create">
+        <div class="admin-rog-header">
+            <h1><i class="bi bi-gear"></i>Administrar <span>Productos</span></h1>
+            <a asp-action="Create" class="btn-rog-primary">
                 <i class="bi bi-plus-lg"></i> Nuevo Producto
             </a>
         </div>
 
         @if (TempData["Success"] != null)
         {
-            <div class="alert-custom alert-success-custom">
+            <div class="alert-rog-success">
                 <i class="bi bi-check-circle-fill"></i>
                 @TempData["Success"]
             </div>
@@ -300,7 +282,7 @@
 
         @if (TempData["Error"] != null)
         {
-            <div class="alert-custom alert-danger-custom">
+            <div class="alert-rog-error">
                 <i class="bi bi-exclamation-triangle-fill"></i>
                 @TempData["Error"]
             </div>
@@ -308,8 +290,8 @@
 
         @if (Model != null && Model.Any())
         {
-            <div class="table-container">
-                <table class="table">
+            <div class="table-rog-container">
+                <table class="table-rog">
                     <thead>
                         <tr>
                             <th>Producto</th>
@@ -324,28 +306,28 @@
                         {
                             <tr>
                                 <td>
-                                    <div class="product-name">@producto.Nombre</div>
+                                    <div class="product-name-rog">@producto.Nombre</div>
                                 </td>
                                 <td>
-                                    <div class="product-desc-cell">@(producto.Descripcion ?? "Sin descripción")</div>
+                                    <div class="product-desc-rog">@(producto.Descripcion ?? "Sin descripción")</div>
                                 </td>
-                                <td class="product-price-cell">Bs @producto.Precio.ToString("N0")</td>
+                                <td class="product-price-rog">Bs @producto.Precio.ToString("N0")</td>
                                 <td>
                                     @{
                                         var stockClass = producto.Cantidad > 5 ? "available" : (producto.Cantidad > 0 ? "low" : "empty");
                                         var stockText = producto.Cantidad > 5 ? "Disponible" : (producto.Cantidad > 0 ? "Pocas unidades" : "Agotado");
                                     }
-                                    <span class="stock-badge-cell @stockClass">● @stockText (@producto.Cantidad)</span>
+                                    <span class="stock-badge-rog @stockClass">● @stockText (@producto.Cantidad)</span>
                                 </td>
                                 <td class="text-end">
-                                    <div class="btn-actions">
-                                        <a asp-action="Details" asp-route-id="@producto.Id" class="btn-action details">
+                                    <div class="btn-rog-actions">
+                                        <a asp-action="Details" asp-route-id="@producto.Id" class="btn-rog-action details">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a asp-action="Edit" asp-route-id="@producto.Id" class="btn-action edit">
+                                        <a asp-action="Edit" asp-route-id="@producto.Id" class="btn-rog-action edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@producto.Id" class="btn-action delete">
+                                        <a asp-action="Delete" asp-route-id="@producto.Id" class="btn-rog-action delete">
                                             <i class="bi bi-trash3"></i>
                                         </a>
                                     </div>
@@ -358,10 +340,10 @@
         }
         else
         {
-            <div class="empty-state">
+            <div class="empty-rog-state">
                 <i class="bi bi-box-seam"></i>
                 <h3>No hay productos</h3>
-                <p>Haz clic en "Nuevo Producto" para agregar tu primer producto.</p>
+                <p style="color: rgba(255,255,255,0.02);">Haz clic en "Nuevo Producto" para agregar tu primer producto</p>
             </div>
         }
     </div>

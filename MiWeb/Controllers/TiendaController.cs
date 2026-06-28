@@ -4,7 +4,7 @@ using LOGIN.Data;
 using LOGIN.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace MiWeb.Controllers
+namespace LOGIN.Controllers
 {
     public class TiendaController : Controller
     {
@@ -28,19 +28,27 @@ namespace MiWeb.Controllers
             return 0;
         }
 
-        // GET: Tienda
-        public async Task<IActionResult> Index()
+        // GET: Tienda con búsqueda
+        public async Task<IActionResult> Index(string searchString)
         {
             if (!UsuarioLogueado())
                 return RedirectToAction("Login", "Account");
 
-            var productos = await _context.Productos.ToListAsync();
+            var productos = from p in _context.Productos select p;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                productos = productos.Where(p => p.Nombre.Contains(searchString) ||
+                                                 (p.Descripcion != null && p.Descripcion.Contains(searchString)));
+            }
+
             var carritoCount = await _context.CarritoItems
                 .Where(c => c.UsuarioId == GetUsuarioId())
                 .SumAsync(c => c.Cantidad);
 
             ViewBag.CarritoCount = carritoCount;
-            return View(productos);
+            ViewBag.SearchString = searchString;
+            return View(await productos.ToListAsync());
         }
 
         // POST: Agregar al carrito

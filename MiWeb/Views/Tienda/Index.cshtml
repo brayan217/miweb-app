@@ -1,303 +1,383 @@
 ﻿@model IEnumerable<LOGIN.Models.Producto>
 
 @{
-    ViewData["Title"] = "Tienda - Mi Inventario";
+    ViewData["Title"] = "NEO STORE - Tienda Gamer";
 }
 
 <style>
-    .tienda-container {
-        background: #0a0a0a;
+    /* ⭐ HERO DE PANTALLA COMPLETA */
+    .hero-full {
         min-height: 100vh;
-        padding: 40px 0;
-        color: #fff;
-        font-family: 'Inter', sans-serif;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #090909 0%, #0a0a1a 50%, #090909 100%);
+        padding: 80px 0;
     }
 
-    .hero-simple {
-        text-align: center;
-        padding: 40px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.03);
-        margin-bottom: 40px;
-    }
-
-        .hero-simple h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -2px;
+        .hero-full .hero-bg-glow {
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(0,207,255,0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-            .hero-simple h1 span {
-                background: linear-gradient(135deg, #ff0044, #ff6b35);
+        .hero-full .hero-bg-glow-2 {
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(122,0,255,0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-full .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 4.5rem;
+            letter-spacing: -2px;
+            color: #fff;
+            line-height: 1.05;
+        }
+
+            .hero-full .hero-title .neon-text {
+                background: linear-gradient(135deg, #00CFFF, #7A00FF);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
+                text-shadow: 0 0 60px rgba(0,207,255,0.15);
             }
 
-        .hero-simple p {
-            color: rgba(255,255,255,0.25);
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            font-weight: 300;
+        .hero-full .hero-subtitle {
+            color: rgba(255,255,255,0.15);
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 10px;
         }
 
+        .hero-full .hero-desc {
+            color: rgba(255,255,255,0.08);
+            font-size: 1rem;
+            max-width: 500px;
+            margin-top: 15px;
+        }
+
+        .hero-full .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+    .btn-hero-primary {
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 16px 45px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.4s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 0 40px rgba(0,207,255,0.08);
+    }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 60px rgba(0,207,255,0.15);
+            color: #fff;
+        }
+
+    .btn-hero-secondary {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.04);
+        color: rgba(255,255,255,0.3);
+        border-radius: 50px;
+        padding: 16px 45px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.4s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .btn-hero-secondary:hover {
+            border-color: #00CFFF;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(0,207,255,0.03);
+        }
+
+    .hero-full .hero-image {
+        max-width: 100%;
+        filter: drop-shadow(0 0 80px rgba(0,207,255,0.04));
+    }
+
+    /* ⭐ TARJETAS 3D */
     .product-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
     }
 
     .product-item {
-        background: rgba(18, 18, 30, 0.95);
-        border: 1px solid rgba(255,255,255,0.04);
-        border-radius: 16px;
-        padding: 20px 20px 20px;
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        background: rgba(18, 18, 30, 0.4);
+        border: 1px solid rgba(255,255,255,0.02);
+        border-radius: 20px;
+        padding: 20px 20px 25px;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
         position: relative;
         overflow: hidden;
+        transform-style: preserve-3d;
+        backdrop-filter: blur(10px);
     }
 
         .product-item::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ff0044, #ff6b35, transparent);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0,207,255,0.02) 0%, transparent 60%);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
         }
 
         .product-item:hover::before {
             opacity: 1;
         }
 
-        .product-item:hover {
-            background: rgba(25, 25, 45, 0.98);
-            border-color: rgba(255,0,68,0.15);
-            transform: translateY(-6px);
-            box-shadow: 0 12px 50px rgba(0,0,0,0.8), 0 0 40px rgba(255,0,68,0.04);
+        .product-item .product-image-container {
+            width: 100%;
+            height: 200px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.02);
         }
 
-    .product-image-container {
-        width: 100%;
-        height: 180px;
-        background: rgba(0,0,0,0.5);
-        border-radius: 12px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 16px;
-        position: relative;
-        border: 1px solid rgba(255,255,255,0.03);
-    }
-
-    .product-image-fallback {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: rgba(255,255,255,0.06);
-        height: 100%;
-        width: 100%;
-    }
-
-        .product-image-fallback i {
-            font-size: 3.5rem;
-            color: rgba(255,0,68,0.12);
-            margin-bottom: 8px;
+        .product-item .product-image-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.04);
+            height: 100%;
+            width: 100%;
         }
 
-        .product-image-fallback span {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.06);
-            letter-spacing: 0.5px;
+            .product-item .product-image-fallback i {
+                font-size: 3.5rem;
+                color: rgba(255,0,68,0.08);
+                margin-bottom: 8px;
+            }
+
+            .product-item .product-image-fallback span {
+                font-size: 0.7rem;
+                color: rgba(255,255,255,0.04);
+                letter-spacing: 0.5px;
+            }
+
+        .product-item .stock-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            background: rgba(6, 214, 160, 0.08);
+            color: #06d6a0;
+            border: 1px solid rgba(6, 214, 160, 0.06);
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+
+            .product-item .stock-badge.empty {
+                background: rgba(239, 71, 111, 0.08);
+                color: #ef476f;
+                border-color: rgba(239, 71, 111, 0.06);
+            }
+
+        .product-item .product-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            color: #fff;
+            letter-spacing: -0.2px;
+        }
+
+        .product-item .product-desc {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.08);
+            margin: 0 0 14px 0;
+            flex: 1;
             font-weight: 300;
         }
 
-    .stock-badge {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        padding: 4px 14px;
-        border-radius: 50px;
-        font-size: 0.55rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        background: rgba(6, 214, 160, 0.08);
-        color: #06d6a0;
-        border: 1px solid rgba(6, 214, 160, 0.06);
-        z-index: 2;
-        backdrop-filter: blur(10px);
-    }
-
-        .stock-badge.empty {
-            background: rgba(239, 71, 111, 0.08);
-            color: #ef476f;
-            border-color: rgba(239, 71, 111, 0.06);
+        .product-item .product-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #00CFFF;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            letter-spacing: -0.5px;
         }
 
-    .product-name {
-        font-size: 1rem;
-        font-weight: 700;
-        margin: 0 0 4px 0;
-        color: #fff;
-        letter-spacing: -0.2px;
-    }
-
-    .product-desc {
-        font-size: 0.78rem;
-        color: rgba(255,255,255,0.2);
-        margin: 0 0 14px 0;
-        flex: 1;
-        letter-spacing: 0.2px;
-        font-weight: 300;
-    }
-
-    .product-price {
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: #ff0044;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        letter-spacing: -0.5px;
-    }
-
-        .product-price .old {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.08);
-            text-decoration: line-through;
-            font-weight: 400;
-            letter-spacing: 0px;
-        }
-
-    .stock-info {
-        font-size: 0.65rem;
-        color: rgba(255,255,255,0.08);
-        margin-top: 6px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-weight: 300;
-        letter-spacing: 0.3px;
-    }
-
-        .stock-info .dot {
-            display: inline-block;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #06d6a0;
-            box-shadow: 0 0 10px rgba(6, 214, 160, 0.15);
-        }
-
-            .stock-info .dot.empty {
-                background: #ef476f;
-                box-shadow: 0 0 10px rgba(239, 71, 111, 0.15);
+            .product-item .product-price .old {
+                font-size: 0.8rem;
+                color: rgba(255,255,255,0.04);
+                text-decoration: line-through;
+                font-weight: 400;
             }
 
-    .btn-add {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255,255,255,0.06);
-        color: rgba(255,255,255,0.7);
-        border-radius: 50px;
-        padding: 10px 20px;
-        font-weight: 600;
-        font-size: 0.8rem;
-        transition: all 0.3s ease;
-        width: 100%;
-        margin-top: 16px;
-        letter-spacing: 0.5px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        text-transform: uppercase;
-    }
-
-        .btn-add:hover {
-            background: linear-gradient(135deg, #ff0044, #ff6b35);
-            border-color: transparent;
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(255,0,68,0.15);
+        .product-item .stock-info {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.02);
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 300;
         }
 
-        .btn-add:disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+            .product-item .stock-info .dot {
+                display: inline-block;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: #06d6a0;
+            }
+
+                .product-item .stock-info .dot.empty {
+                    background: #ef476f;
+                }
+
+        .product-item .btn-add {
             background: rgba(255,255,255,0.02);
-            border-color: rgba(255,255,255,0.02);
-            color: rgba(255,255,255,0.1);
-        }
-
-            .btn-add:disabled:hover {
-                background: rgba(255,255,255,0.02);
-                box-shadow: none;
-                transform: none;
-            }
-
-    .nav-simple {
-        padding: 15px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.03);
-        margin-bottom: 40px;
-        background: rgba(0,0,0,0.2);
-        border-radius: 12px;
-    }
-
-        .nav-simple a {
-            color: rgba(255,255,255,0.15);
-            text-decoration: none;
-            margin: 0 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            transition: color 0.3s;
+            border: 1px solid rgba(255,255,255,0.03);
+            color: rgba(255,255,255,0.3);
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 16px;
+            letter-spacing: 0.8px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
 
-            .nav-simple a:hover {
-                color: rgba(255,255,255,0.6);
+            .product-item .btn-add:hover {
+                background: linear-gradient(135deg, #ff0044, #ff6b35);
+                border-color: transparent;
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 0 30px rgba(255,0,68,0.05);
             }
 
-            .nav-simple a.active {
-                color: #ff0044 !important;
+            .product-item .btn-add:disabled {
+                opacity: 0.1;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
             }
 
-    .section-title {
-        font-weight: 700;
-        color: #fff;
-        margin: 0;
-        letter-spacing: -0.5px;
-        font-size: 1.2rem;
+    /* ⭐ CATEGORÍAS */
+    .categories-section {
+        padding: 60px 0;
     }
 
-        .section-title i {
-            color: #ff0044;
-            margin-right: 10px;
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .category-item {
+        background: rgba(255,255,255,0.01);
+        border: 1px solid rgba(255,255,255,0.02);
+        border-radius: 16px;
+        padding: 20px 15px;
+        text-align: center;
+        transition: all 0.4s ease;
+        cursor: pointer;
+        text-decoration: none;
+        color: rgba(255,255,255,0.2);
+    }
+
+        .category-item:hover {
+            background: rgba(255,255,255,0.02);
+            border-color: rgba(0,207,255,0.05);
+            transform: translateY(-5px);
+            color: #fff;
         }
 
-    .section-count {
-        color: rgba(255,255,255,0.04);
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
+        .category-item i {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+            color: #00CFFF;
+            opacity: 0.2;
+            transition: all 0.4s ease;
+        }
 
+        .category-item:hover i {
+            opacity: 1;
+            text-shadow: 0 0 30px rgba(0,207,255,0.1);
+        }
+
+        .category-item span {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+    /* ⭐ RESPONSIVE */
     @@media (max-width: 768px) {
-        .hero-simple h1 {
-            font-size: 2.2rem;
+        .hero-full .hero-title {
+            font-size: 2.8rem;
+        }
+
+        .hero-full .hero-buttons {
+            flex-direction: column;
+            align-items: stretch;
         }
 
         .product-grid {
@@ -305,120 +385,183 @@
             gap: 16px;
         }
 
-        .product-item {
-            padding: 16px 14px 14px;
+        .categories-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .hero-full .hero-title {
+            font-size: 2rem;
         }
 
-        .product-image-container {
-            height: 140px;
+        .product-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
-        .product-price {
-            font-size: 1.1rem;
+        .product-item .product-image-container {
+            height: 120px;
         }
 
-        .nav-simple a {
-            margin: 0 10px;
-            font-size: 0.55rem;
-            letter-spacing: 0.8px;
+        .product-item .product-name {
+            font-size: 0.8rem;
         }
 
-        .product-name {
-            font-size: 0.85rem;
+        .product-item .product-price {
+            font-size: 0.9rem;
         }
 
-        .btn-add {
-            font-size: 0.7rem;
-            padding: 8px 16px;
+        .product-item .btn-add {
+            font-size: 0.6rem;
+            padding: 6px 10px;
         }
     }
 </style>
 
-<div class="tienda-container">
+<div class="hero-full">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-bg-glow-2"></div>
     <div class="container">
-        <div class="hero-simple">
-            <h1>ROG <span>XREAL RX</span></h1>
-            <p>Amplifica tu victoria</p>
-        </div>
-
-        <!-- ⭐ NAVEGACIÓN CORREGIDA: PRODUCTOS → Tienda pública -->
-        <div class="nav-simple">
-            <div class="container text-center">
-                <a asp-controller="Home" asp-action="Index">REPÚBLICA DE GAMERS</a>
-                <a asp-controller="Tienda" asp-action="Index" class="active">PRODUCTOS</a>
-                <a asp-controller="Home" asp-action="Privacy">INNOVACIÓN</a>
-                <a asp-controller="Home" asp-action="Privacy">SOPORTE</a>
+        <div class="row align-items-center">
+            <div class="col-lg-7" data-aos="fade-right" data-aos-duration="1000">
+                <span class="hero-subtitle">⚡ Bienvenido al futuro</span>
+                <h1 class="hero-title">
+                    <span class="neon-text">NEO STORE</span><br />
+                    <span style="color: rgba(255,255,255,0.8);">La tienda gamer</span>
+                </h1>
+                <p class="hero-desc">Explora lo último en tecnología gaming, donde el rendimiento se encuentra con el estilo futurista.</p>
+                <div class="hero-buttons">
+                    <a href="#productos" class="btn-hero-primary">
+                        <i class="bi bi-rocket-takeoff"></i> Explorar
+                    </a>
+                    <a asp-controller="Tienda" asp-action="Index" class="btn-hero-secondary">
+                        <i class="bi bi-grid-3x3-gap-fill"></i> Ver todos
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <img src="https://via.placeholder.com/500x500/0a0a1a/00CFFF?text=NEO+STORE" alt="NEO STORE" class="hero-image" />
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="section-title">
-                <i class="bi bi-grid-3x3-gap-fill"></i>Productos
-            </h4>
-            <span class="section-count">@Model.Count() productos</span>
-        </div>
+<!-- ⭐ CATEGORÍAS -->
+<div class="container categories-section" data-aos="fade-up">
+    <h2 class="section-title" style="text-align: center; margin-bottom: 30px;">
+        <i class="bi bi-grid-3x3-gap-fill" style="color: #00CFFF;"></i>
+        <span style="font-weight: 700; letter-spacing: -1px; color: #fff;">Categorías</span>
+    </h2>
+    <div class="categories-grid">
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="Laptop" class="category-item" data-aos="zoom-in" data-aos-delay="0">
+            <i class="bi bi-laptop"></i>
+            <span>Laptops</span>
+        </a>
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="PC" class="category-item" data-aos="zoom-in" data-aos-delay="50">
+            <i class="bi bi-pc-display"></i>
+            <span>PC Gamer</span>
+        </a>
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="Monitor" class="category-item" data-aos="zoom-in" data-aos-delay="100">
+            <i class="bi bi-tv"></i>
+            <span>Monitores</span>
+        </a>
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="Componente" class="category-item" data-aos="zoom-in" data-aos-delay="150">
+            <i class="bi bi-cpu"></i>
+            <span>Componentes</span>
+        </a>
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="Accesorio" class="category-item" data-aos="zoom-in" data-aos-delay="200">
+            <i class="bi bi-keyboard"></i>
+            <span>Accesorios</span>
+        </a>
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="Streaming" class="category-item" data-aos="zoom-in" data-aos-delay="250">
+            <i class="bi bi-mic"></i>
+            <span>Streaming</span>
+        </a>
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="Consola" class="category-item" data-aos="zoom-in" data-aos-delay="300">
+            <i class="bi bi-controller"></i>
+            <span>Consolas</span>
+        </a>
+        <a asp-controller="Tienda" asp-action="Index" asp-route-searchString="Silla" class="category-item" data-aos="zoom-in" data-aos-delay="350">
+            <i class="bi bi-chair"></i>
+            <span>Sillas Gamer</span>
+        </a>
+    </div>
+</div>
 
-        <div class="product-grid">
-            @foreach (var producto in Model)
-            {
-                <div class="product-item">
-                    <div class="product-image-container">
-                        <div class="product-image-fallback">
-                            <i class="bi bi-box-seam"></i>
-                            <span>@producto.Nombre</span>
-                        </div>
-                        @if (producto.Cantidad > 0)
-                        {
-                            <span class="stock-badge">● Disponible</span>
-                        }
-                        else
-                        {
-                            <span class="stock-badge empty">● Agotado</span>
-                        }
-                    </div>
+<!-- ⭐ PRODUCTOS -->
+<div class="container" id="productos" style="padding-bottom: 60px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="section-title" style="font-weight: 700; letter-spacing: -1px; color: #fff;">
+            <i class="bi bi-grid-3x3-gap-fill" style="color: #00CFFF;"></i>
+            <span>Productos</span>
+        </h4>
+        <span style="color: rgba(255,255,255,0.02); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px;">
+            @Model.Count() productos
+        </span>
+    </div>
 
-                    <h5 class="product-name">@producto.Nombre</h5>
-                    <p class="product-desc">@producto.Descripcion</p>
-                    <div class="product-price">
-                        Bs @producto.Precio.ToString("N0")
-                        @if (producto.Precio > 10000)
-                        {
-                            <span class="old">Bs @((producto.Precio * 1.3m).ToString("N0"))</span>
-                        }
-                    </div>
-                    <div class="stock-info">
-                        @if (producto.Cantidad > 0)
-                        {
-                            <span class="dot"></span>
-                            <span>@producto.Cantidad unidades</span>
-                        }
-                        else
-                        {
-                            <span class="dot empty"></span>
-                            <span style="color: rgba(255,255,255,0.05);">Sin stock</span>
-                        }
+    <div class="product-grid">
+        @foreach (var producto in Model)
+        {
+            <div class="product-item">
+                <div class="product-image-container">
+                    <div class="product-image-fallback">
+                        <i class="bi bi-box-seam"></i>
+                        <span>@producto.Nombre</span>
                     </div>
                     @if (producto.Cantidad > 0)
                     {
-                        <button class="btn-add add-to-cart" data-id="@producto.Id">
-                            <i class="bi bi-cart-plus"></i> Agregar
-                        </button>
+                        <span class="stock-badge">● Disponible</span>
                     }
                     else
                     {
-                        <button class="btn-add" disabled>
-                            <i class="bi bi-x-circle"></i> Agotado
-                        </button>
+                        <span class="stock-badge empty">● Agotado</span>
                     }
                 </div>
-            }
-        </div>
+
+                <h5 class="product-name">@producto.Nombre</h5>
+                <p class="product-desc">@producto.Descripcion</p>
+                <div class="product-price">
+                    Bs @producto.Precio.ToString("N0")
+                    @if (producto.Precio > 10000)
+                    {
+                        <span class="old">Bs @((producto.Precio * 1.3m).ToString("N0"))</span>
+                    }
+                </div>
+                <div class="stock-info">
+                    @if (producto.Cantidad > 0)
+                    {
+                        <span class="dot"></span>
+                        <span>@producto.Cantidad unidades</span>
+                    }
+                    else
+                    {
+                        <span class="dot empty"></span>
+                        <span style="color: rgba(255,255,255,0.03);">Sin stock</span>
+                    }
+                </div>
+                @if (producto.Cantidad > 0)
+                {
+                    <button class="btn-add add-to-cart" data-id="@producto.Id">
+                        <i class="bi bi-cart-plus"></i> Agregar
+                    </button>
+                }
+                else
+                {
+                    <button class="btn-add" disabled>
+                        <i class="bi bi-x-circle"></i> Agotado
+                    </button>
+                }
+            </div>
+        }
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        // ⭐ AGREGAR AL CARRITO
         $('.add-to-cart').click(function() {
             var btn = $(this);
             var productoId = btn.data('id');

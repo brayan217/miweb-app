@@ -1,70 +1,180 @@
-﻿@model IEnumerable<LOGIN.Models.CarritoItem>
-
-@{
-    ViewData["Title"] = "Checkout";
+﻿@{
+    ViewData["Title"] = "Checkout - ROG Inventory";
     var total = ViewBag.Total as decimal? ?? 0;
 }
 
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <h1 class="display-5 fw-bold mb-4">
-                <i class="bi bi-credit-card"></i> Finalizar Compra
-            </h1>
+<style>
+    .checkout-rog-container {
+        background: #0a0a0a;
+        min-height: 100vh;
+        padding: 40px 0;
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+    }
 
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
-                    <h5 class="fw-bold mb-3">
-                        <i class="bi bi-receipt"></i> Resumen del pedido
-                    </h5>
+    .checkout-rog-container h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        letter-spacing: -1px;
+    }
 
-                    @if (Model != null && Model.Any())
-                    {
-                        <div class="table-responsive">
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th class="text-end">Precio</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@item.Producto?.Nombre</td>
-                                            <td>@item.Cantidad</td>
-                                            <td class="text-end">@((item.Cantidad * (item.Producto?.Precio ?? 0)).ToString("C"))</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                                <tfoot>
-                                    <tr class="fw-bold">
-                                        <td colspan="2" class="text-end">Total:</td>
-                                        <td class="text-end text-primary fs-5">@total.ToString("C")</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    }
+    .checkout-rog-container h1 span {
+        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
-                    <hr />
+    .checkout-rog-card {
+        background: rgba(18, 18, 30, 0.6);
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(10px);
+    }
 
-                    <form asp-action="ConfirmarPedido" method="post">
+    .checkout-rog-card h5 {
+        color: #fff;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .checkout-rog-card h5 i {
+        color: #ff0044;
+        margin-right: 10px;
+    }
+
+    .checkout-rog-card label {
+        color: rgba(255,255,255,0.3);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .checkout-rog-card .form-control,
+    .checkout-rog-card select {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 12px;
+        color: #fff;
+        padding: 14px 18px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .checkout-rog-card .form-control:focus,
+    .checkout-rog-card select:focus {
+        outline: none;
+        border-color: #ff0044;
+        box-shadow: 0 0 0 4px rgba(255,0,68,0.05);
+        background: rgba(255,255,255,0.06);
+    }
+
+    .checkout-rog-card .form-control::placeholder {
+        color: rgba(255,255,255,0.08);
+    }
+
+    .checkout-rog-card select option {
+        background: #1a1a2e;
+        color: #fff;
+    }
+
+    .checkout-rog-total {
+        text-align: right;
+        padding: 20px 0;
+        border-top: 1px solid rgba(255,255,255,0.03);
+        margin-top: 20px;
+    }
+
+    .checkout-rog-total .label {
+        color: rgba(255,255,255,0.15);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .checkout-rog-total .precio {
+        color: #ff0044;
+        font-size: 2rem;
+        font-weight: 900;
+    }
+
+    .btn-rog-primary {
+        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 16px 50px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-rog-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 40px rgba(255,0,68,0.2);
+        color: #fff;
+    }
+
+    .btn-rog-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-rog-outline {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.06);
+        color: rgba(255,255,255,0.3);
+        border-radius: 50px;
+        padding: 14px 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-rog-outline:hover {
+        border-color: #ff0044;
+        color: #fff;
+    }
+
+    @@media (max-width: 768px) {
+        .checkout-rog-total {
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="checkout-rog-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="mb-4">Finalizar <span>Compra</span></h1>
+
+                <form asp-controller="Tienda" asp-action="ConfirmarPedido" method="post" id="checkoutForm">
+                    <div class="checkout-rog-card">
+                        <h5><i class="bi bi-geo-alt"></i>Dirección de envío</h5>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">
-                                <i class="bi bi-geo-alt"></i> Dirección de envío
-                            </label>
-                            <input type="text" name="direccion" class="form-control" 
-                                   placeholder="Calle, número, ciudad, departamento" required />
+                            <label>Dirección completa</label>
+                            <input type="text" name="direccion" class="form-control" placeholder="Calle, número, ciudad, departamento" required />
                         </div>
+                    </div>
 
+                    <div class="checkout-rog-card">
+                        <h5><i class="bi bi-credit-card"></i>Método de pago</h5>
                         <div class="mb-3">
-                            <label class="form-label fw-bold">
-                                <i class="bi bi-credit-card"></i> Método de pago
-                            </label>
-                            <select name="metodoPago" class="form-select" required>
+                            <label>Selecciona un método</label>
+                            <select name="metodoPago" class="form-control" required>
                                 <option value="">Selecciona...</option>
                                 <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
                                 <option value="Tarjeta de Débito">Tarjeta de Débito</option>
@@ -72,48 +182,45 @@
                                 <option value="Pago en Efectivo">Pago en Efectivo (contra entrega)</option>
                             </select>
                         </div>
+                    </div>
 
-                        <div class="d-flex gap-3 mt-4">
-                            <a asp-action="Carrito" class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-left"></i> Volver
-                            </a>
-                            <button type="submit" class="btn btn-gradient flex-grow-1" id="confirmarBtn">
-                                <i class="bi bi-check-circle"></i> Confirmar pedido
-                            </button>
+                    <div class="checkout-rog-card">
+                        <h5><i class="bi bi-receipt"></i>Resumen del pedido</h5>
+                        <div class="checkout-rog-total">
+                            <div>
+                                <span class="label">Total a pagar</span>
+                                <div class="precio">Bs @total.ToString("N0")</div>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a asp-controller="Tienda" asp-action="Carrito" class="btn-rog-outline">
+                            <i class="bi bi-arrow-left me-2"></i>Volver al carrito
+                        </a>
+                        <button type="submit" class="btn-rog-primary" id="confirmarBtn">
+                            <i class="bi bi-check-circle me-2"></i>Confirmar pedido
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    .btn-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 2rem;
-        padding: 0.75rem 2rem;
-        transition: all 0.3s;
-    }
-    .btn-gradient:hover {
-        transform: scale(1.02);
-        color: white;
-    }
-    .card {
-        border-radius: 1rem;
-        overflow: hidden;
-    }
-</style>
-
 <script>
-    document.getElementById('confirmarBtn')?.addEventListener('click', function(e) {
+    document.getElementById('confirmarBtn').addEventListener('click', function(e) {
+        const form = document.getElementById('checkoutForm');
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            form.reportValidity();
+            return;
+        }
         if (!confirm('¿Confirmar tu pedido?')) {
             e.preventDefault();
         } else {
             this.disabled = true;
-            this.innerHTML = '<i class="bi bi-hourglass-split"></i> Procesando...';
+            this.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Procesando...';
         }
     });
 </script>

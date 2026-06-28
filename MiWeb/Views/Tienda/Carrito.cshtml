@@ -1,116 +1,267 @@
-﻿@model IEnumerable<CarritoItem>
+﻿@model IEnumerable<LOGIN.Models.CarritoItem>
 
 @{
-    ViewData["Title"] = "Carrito de Compras";
+    ViewData["Title"] = "Carrito - ROG Inventory";
     var total = ViewBag.Total as decimal? ?? 0;
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="display-5 fw-bold">
-            <i class="bi bi-cart3"></i> Mi Carrito
-        </h1>
-        <a asp-action="Index" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left"></i> Seguir comprando
-        </a>
-    </div>
-
-    @if (Model != null && Model.Any())
-    {
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr data-item-id="@item.Id">
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-box-seam me-3" style="font-size: 1.5rem; color: #667eea;"></i>
-                                    <div>
-                                        <div class="fw-bold">@item.Producto?.Nombre</div>
-                                        <small class="text-muted">@item.Producto?.Descripcion</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Bs @(item.Producto?.Precio.ToString("N0") ?? "0")</td>
-                            <td>
-                                <div class="input-group" style="width: 120px;">
-                                    <button class="btn btn-outline-secondary btn-sm btn-cantidad" data-action="minus" data-id="@item.Id">-</button>
-                                    <input type="number" class="form-control form-control-sm text-center cantidad-input"
-                                           data-id="@item.Id" value="@item.Cantidad" min="1" max="99" />
-                                    <button class="btn btn-outline-secondary btn-sm btn-cantidad" data-action="plus" data-id="@item.Id">+</button>
-                                </div>
-                            </td>
-                            <td class="subtotal">Bs @((item.Cantidad * (item.Producto?.Precio ?? 0)).ToString("N0"))</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm btn-eliminar" data-id="@item.Id">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr class="table-light fw-bold">
-                        <td colspan="3" class="text-end">Total:</td>
-                        <td class="text-primary fs-4" id="totalCarrito">Bs @total.ToString("N0")</td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-
-        <div class="d-flex justify-content-end mt-4">
-            <a asp-action="Checkout" class="btn btn-gradient btn-lg">
-                <i class="bi bi-credit-card"></i> Proceder al pago
-            </a>
-        </div>
-    }
-    else
-    {
-        <div class="text-center py-5">
-            <i class="bi bi-cart-x" style="font-size: 4rem; color: #dee2e6;"></i>
-            <h3 class="mt-3">Tu carrito está vacío</h3>
-            <p class="text-muted">¡Explora nuestros productos y encuentra lo que necesitas!</p>
-            <a asp-action="Index" class="btn btn-gradient">
-                <i class="bi bi-shop"></i> Ir a la tienda
-            </a>
-        </div>
-    }
-</div>
-
 <style>
-    .btn-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+    .carrito-rog-container {
+        background: #0a0a0a;
+        min-height: 100vh;
+        padding: 40px 0;
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .carrito-rog-container h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        letter-spacing: -1px;
+        color: #fff;
+    }
+
+    .carrito-rog-container h1 span {
+        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .carrito-rog-item {
+        background: rgba(18, 18, 30, 0.6);
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .carrito-rog-item:hover {
+        background: rgba(25, 25, 45, 0.8);
+        border-color: rgba(255,0,68,0.08);
+        transform: translateY(-2px);
+    }
+
+    .carrito-rog-item .info {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .carrito-rog-item .info h5 {
+        color: #fff;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .carrito-rog-item .info small {
+        color: rgba(255,255,255,0.15);
+    }
+
+    .carrito-rog-item .precio {
+        color: #ff0044;
+        font-weight: 700;
+        font-size: 1.1rem;
+        min-width: 100px;
+    }
+
+    .carrito-rog-item .cantidad {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .carrito-rog-item .cantidad input {
+        width: 60px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px;
+        color: #fff;
+        padding: 5px 10px;
+        text-align: center;
+    }
+
+    .carrito-rog-item .cantidad input:focus {
+        outline: none;
+        border-color: #ff0044;
+    }
+
+    .btn-rog-cantidad {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        color: rgba(255,255,255,0.3);
+        border-radius: 50px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-rog-cantidad:hover {
+        border-color: #ff0044;
+        color: #fff;
+    }
+
+    .btn-rog-eliminar {
+        background: transparent;
         border: none;
-        border-radius: 2rem;
-        padding: 0.75rem 2rem;
-        transition: all 0.3s;
+        color: rgba(255,255,255,0.08);
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        cursor: pointer;
     }
 
-        .btn-gradient:hover {
-            transform: scale(1.05);
-            color: white;
-        }
-
-    .table tbody tr {
-        transition: all 0.3s;
+    .btn-rog-eliminar:hover {
+        color: #ef476f;
     }
 
-        .table tbody tr:hover {
-            background-color: rgba(102, 126, 234, 0.05);
-        }
+    .carrito-rog-total {
+        background: rgba(18, 18, 30, 0.6);
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 16px;
+        padding: 25px 30px;
+        margin-top: 20px;
+    }
+
+    .carrito-rog-total .total-label {
+        color: rgba(255,255,255,0.15);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .carrito-rog-total .total-precio {
+        color: #ff0044;
+        font-size: 2rem;
+        font-weight: 900;
+    }
+
+    .btn-rog-primary {
+        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 14px 40px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-rog-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 30px rgba(255,0,68,0.2);
+        color: #fff;
+    }
+
+    .btn-rog-outline {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.06);
+        color: rgba(255,255,255,0.3);
+        border-radius: 50px;
+        padding: 14px 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-rog-outline:hover {
+        border-color: #ff0044;
+        color: #fff;
+    }
+
+    .carrito-rog-vacio {
+        text-align: center;
+        padding: 80px 20px;
+    }
+
+    .carrito-rog-vacio i {
+        font-size: 4rem;
+        color: rgba(255,255,255,0.03);
+        margin-bottom: 20px;
+    }
+
+    .carrito-rog-vacio h3 {
+        color: rgba(255,255,255,0.05);
+        font-weight: 300;
+    }
+
+    .carrito-rog-vacio p {
+        color: rgba(255,255,255,0.03);
+    }
 </style>
+
+<div class="carrito-rog-container">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <h1><i class="bi bi-cart3 me-2" style="color: #ff0044;"></i>Mi <span>Carrito</span></h1>
+            <a asp-action="Index" class="btn-rog-outline">
+                <i class="bi bi-arrow-left me-2"></i>Seguir comprando
+            </a>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="carrito-rog-item" data-item-id="@item.Id">
+                    <div class="info">
+                        <h5>@item.Producto?.Nombre</h5>
+                        <small>@item.Producto?.Descripcion</small>
+                    </div>
+                    <div class="precio">
+                        Bs @(item.Producto?.Precio.ToString("N0") ?? "0")
+                    </div>
+                    <div class="cantidad">
+                        <button class="btn-rog-cantidad" data-action="minus" data-id="@item.Id">−</button>
+                        <input type="number" class="cantidad-input" data-id="@item.Id" value="@item.Cantidad" min="1" max="@(item.Producto?.Cantidad ?? 99)" />
+                        <button class="btn-rog-cantidad" data-action="plus" data-id="@item.Id">+</button>
+                        <button class="btn-rog-eliminar" data-id="@item.Id" title="Eliminar">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <div class="carrito-rog-total d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <span class="total-label">Total</span>
+                    <div class="total-precio">Bs @total.ToString("N0")</div>
+                </div>
+                <div class="d-flex gap-3">
+                    <a asp-action="Checkout" class="btn-rog-primary">
+                        <i class="bi bi-credit-card me-2"></i>Proceder al pago
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="carrito-rog-vacio">
+                <i class="bi bi-cart-x"></i>
+                <h3>Tu carrito está vacío</h3>
+                <p>Explora nuestros productos y agrega lo que necesites</p>
+                <a asp-action="Index" class="btn-rog-primary mt-3 d-inline-block">
+                    <i class="bi bi-shop me-2"></i>Ir a la tienda
+                </a>
+            </div>
+        }
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -122,10 +273,7 @@
                         if (response.itemRemoved) {
                             location.reload();
                         } else {
-                            var row = $('tr[data-item-id="' + itemId + '"]');
-                            row.find('.subtotal').text('Bs ' + response.subtotal.toFixed(0));
-                            $('#totalCarrito').text('Bs ' + response.total.toFixed(0));
-                            updateCartBadge(response.count);
+                            location.reload();
                         }
                     } else {
                         alert(response.message || 'Error al actualizar');
@@ -136,16 +284,7 @@
                 });
         }
 
-        function updateCartBadge(count) {
-            $('.badge.bg-danger').remove();
-            if (count > 0) {
-                $('.btn-gradient.position-relative').append(
-                    '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">' + count + '</span>'
-                );
-            }
-        }
-
-        $('.btn-cantidad').click(function() {
+        $('.btn-rog-cantidad').click(function() {
             var id = parseInt($(this).data('id'));
             var input = $('.cantidad-input[data-id="' + id + '"]');
             var cantidad = parseInt(input.val());
@@ -157,6 +296,11 @@
             }
 
             if (cantidad < 1) return;
+            if (cantidad > parseInt(input.max)) {
+                alert('Stock insuficiente');
+                return;
+            }
+
             actualizarCantidad(id, cantidad);
         });
 
@@ -164,10 +308,14 @@
             var id = parseInt($(this).data('id'));
             var cantidad = parseInt($(this).val());
             if (isNaN(cantidad) || cantidad < 1) cantidad = 1;
+            if (cantidad > parseInt($(this).max)) {
+                alert('Stock insuficiente');
+                cantidad = parseInt($(this).max);
+            }
             actualizarCantidad(id, cantidad);
         });
 
-        $('.btn-eliminar').click(function() {
+        $('.btn-rog-eliminar').click(function() {
             var id = parseInt($(this).data('id'));
             if (confirm('¿Eliminar este producto del carrito?')) {
                 actualizarCantidad(id, 0);

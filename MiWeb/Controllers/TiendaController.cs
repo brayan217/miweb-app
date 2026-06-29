@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using LOGIN.Data;
-using LOGIN.Models;
+using MiWeb.Data;
+using MiWeb.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace LOGIN.Controllers
+namespace MiWeb.Controllers
 {
     public class TiendaController : Controller
     {
@@ -232,7 +232,7 @@ namespace LOGIN.Controllers
             _context.CarritoItems.RemoveRange(carritoItems);
             await _context.SaveChangesAsync();
 
-            TempData["Mensaje"] = "¡Pedido realizado con éxito!";
+            TempData["Mensaje"] = "🎉 ¡Compra realizada con éxito! Tu pedido ha sido confirmado.";
             return RedirectToAction("MisCompras");
         }
 

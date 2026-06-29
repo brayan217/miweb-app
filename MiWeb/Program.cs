@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using LOGIN.Data;
-using LOGIN.Models;
+using MiWeb.Data;
+using MiWeb.Models;
 using System.Security.Cryptography;
 using System.Text;
+// using WebEssentials.AspNetCore.PWA;  // Comentado temporalmente - verifica la instalación de la package
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// ⭐ ACTIVAR PROGRESSIVE WEB APP (PWA)
+// ⭐ ACTIVAR PWA
 builder.Services.AddProgressiveWebApp();
 
 // Configuración de sesión
@@ -46,7 +46,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // ==========================================
-// ⭐ CREAR USUARIO DE PRUEBA
+// ⭐ CREAR USUARIOS DE PRUEBA
 // ==========================================
 using (var scope = app.Services.CreateScope())
 {
@@ -63,12 +63,20 @@ using (var scope = app.Services.CreateScope())
             FechaRegistro = DateTime.Now
         };
 
-        context.Usuarios.Add(usuario);
+        var admin = new Usuario
+        {
+            Nombre = "Administrador",
+            Email = "admin@gmail.com",
+            ContrasenaHash = HashContrasena("admin123"),
+            FechaRegistro = DateTime.Now
+        };
+
+        context.Usuarios.AddRange(usuario, admin);
         context.SaveChanges();
 
-        Console.WriteLine("✅ Usuario de prueba creado:");
-        Console.WriteLine("   Email: brayan@gmail.com");
-        Console.WriteLine("   Contraseña: 123456");
+        Console.WriteLine("✅ Usuarios de prueba creados:");
+        Console.WriteLine("   Email: brayan@gmail.com | Contraseña: 123456");
+        Console.WriteLine("   Email: admin@gmail.com | Contraseña: admin123");
     }
 
     // ⭐ CREAR PRODUCTOS DE PRUEBA
@@ -76,30 +84,10 @@ using (var scope = app.Services.CreateScope())
     {
         var productos = new List<Producto>
         {
-            new Producto { 
-                Nombre = "ASUS ROG Strix G18", 
-                Descripcion = "Laptop gamer de alto rendimiento", 
-                Precio = 22000, 
-                Cantidad = 10 
-            },
-            new Producto { 
-                Nombre = "ROG Phone 8", 
-                Descripcion = "Smartphone gamer definitivo", 
-                Precio = 15500, 
-                Cantidad = 15 
-            },
-            new Producto { 
-                Nombre = "ROG Swift OLED", 
-                Descripcion = "Monitor 4K 240Hz", 
-                Precio = 12800, 
-                Cantidad = 8 
-            },
-            new Producto { 
-                Nombre = "ROG Azoth", 
-                Descripcion = "Teclado mecánico inalámbrico", 
-                Precio = 3200, 
-                Cantidad = 20 
-            }
+            new Producto { Nombre = "ASUS ROG Strix G18", Descripcion = "Laptop gamer de alto rendimiento", Precio = 22000, Cantidad = 10 },
+            new Producto { Nombre = "ROG Phone 8", Descripcion = "Smartphone gamer definitivo", Precio = 15500, Cantidad = 15 },
+            new Producto { Nombre = "ROG Swift OLED", Descripcion = "Monitor 4K 240Hz", Precio = 12800, Cantidad = 8 },
+            new Producto { Nombre = "ROG Azoth", Descripcion = "Teclado mecánico inalámbrico", Precio = 3200, Cantidad = 20 }
         };
         context.Productos.AddRange(productos);
         context.SaveChanges();

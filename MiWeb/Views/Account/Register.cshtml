@@ -1,36 +1,35 @@
 ﻿@{
-    ViewData["Title"] = "Registrarse - ROG Inventory";
+    ViewData["Title"] = "Registrarse - NEO STORE";
 }
 
 <style>
-    .register-rog-container {
-        background: #0a0a0a;
+    .register-container {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 40px 20px;
-        font-family: 'Inter', sans-serif;
+        background: #090909;
         position: relative;
         overflow: hidden;
     }
 
-    .register-rog-container::before {
+    .register-container::before {
         content: '';
         position: absolute;
-        top: -50%;
-        right: -20%;
+        top: -30%;
+        right: -10%;
         width: 600px;
         height: 600px;
-        background: radial-gradient(circle, rgba(255,0,68,0.05) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(0,207,255,0.02) 0%, transparent 70%);
         border-radius: 50%;
         pointer-events: none;
     }
 
-    .register-rog-card {
-        background: rgba(18, 18, 30, 0.8);
-        border: 1px solid rgba(255,255,255,0.04);
-        border-radius: 20px;
+    .register-card {
+        background: rgba(18, 18, 30, 0.4);
+        border: 1px solid rgba(255,255,255,0.02);
+        border-radius: 24px;
         padding: 50px 40px;
         max-width: 420px;
         width: 100%;
@@ -39,67 +38,69 @@
         z-index: 1;
     }
 
-    .register-rog-card .logo {
+    .register-card .logo {
         text-align: center;
         margin-bottom: 35px;
     }
 
-    .register-rog-card .logo h1 {
-        font-size: 2.2rem;
+    .register-card .logo h1 {
+        font-family: 'Orbitron', sans-serif;
         font-weight: 900;
-        letter-spacing: -1px;
+        font-size: 2rem;
         color: #fff;
+        letter-spacing: -1px;
     }
 
-    .register-rog-card .logo h1 span {
-        background: linear-gradient(135deg, #ff0044, #ff6b35);
+    .register-card .logo h1 span {
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
-    .register-rog-card .logo p {
-        color: rgba(255,255,255,0.15);
+    .register-card .logo p {
+        color: #FFFFFF;
         font-size: 0.85rem;
         letter-spacing: 1px;
     }
 
-    .register-rog-card .form-group {
+    .register-card .form-group {
         margin-bottom: 20px;
     }
 
-    .register-rog-card label {
-        color: rgba(255,255,255,0.3);
+    .register-card label {
+        color: #FFFFFF;
         font-weight: 600;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-bottom: 6px;
         display: block;
     }
 
-    .register-rog-card .form-control {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.06);
+    .register-card .form-control {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.03);
         border-radius: 12px;
         color: #fff;
         padding: 14px 18px;
         width: 100%;
         transition: all 0.3s ease;
+        font-size: 1rem;
     }
 
-    .register-rog-card .form-control:focus {
+    .register-card .form-control:focus {
         outline: none;
-        border-color: #ff0044;
-        box-shadow: 0 0 0 4px rgba(255,0,68,0.05);
-        background: rgba(255,255,255,0.06);
+        border-color: #00CFFF;
+        box-shadow: 0 0 0 4px rgba(0,207,255,0.02);
+        background: rgba(255,255,255,0.03);
     }
 
-    .register-rog-card .form-control::placeholder {
-        color: rgba(255,255,255,0.08);
+    .register-card .form-control::placeholder {
+        color: #FFFFFF;
     }
 
-    .btn-rog-primary {
-        background: linear-gradient(135deg, #ff0044, #ff6b35);
+    .btn-register-neon {
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
         color: #fff;
         border: none;
         border-radius: 50px;
@@ -111,34 +112,46 @@
         width: 100%;
         transition: all 0.3s ease;
         cursor: pointer;
+        margin-top: 10px;
     }
 
-    .btn-rog-primary:hover {
+    .btn-register-neon:hover {
         transform: translateY(-3px);
-        box-shadow: 0 0 40px rgba(255,0,68,0.2);
+        box-shadow: 0 0 40px rgba(0,207,255,0.1);
     }
 
-    .register-rog-footer {
+    .register-footer {
         text-align: center;
         margin-top: 25px;
         padding-top: 20px;
-        border-top: 1px solid rgba(255,255,255,0.03);
+        border-top: 1px solid rgba(255,255,255,0.02);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
     }
 
-    .register-rog-footer a {
-        color: rgba(255,255,255,0.15);
-        text-decoration: none;
-        transition: all 0.3s ease;
+    .register-footer span {
+        color: #FFFFFF;
         font-size: 0.85rem;
     }
 
-    .register-rog-footer a:hover {
-        color: #ff0044;
+    .register-footer a {
+        color: #00CFFF;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+
+    .register-footer a:hover {
+        color: #7A00FF;
+        text-decoration: underline;
     }
 </style>
 
-<div class="register-rog-container">
-    <div class="register-rog-card">
+<div class="register-container">
+    <div class="register-card" data-aos="fade-up">
         <div class="logo">
             <h1>Crear <span>Cuenta</span></h1>
             <p>Regístrate para comenzar</p>
@@ -165,13 +178,13 @@
                 <input type="password" id="ConfirmarContrasena" name="ConfirmarContrasena" class="form-control" placeholder="Repite tu contraseña" required />
             </div>
 
-            <button type="submit" class="btn-rog-primary">
+            <button type="submit" class="btn-register-neon">
                 <i class="bi bi-person-plus me-2"></i>Registrarse
             </button>
         </form>
 
-        <div class="register-rog-footer">
-            <span style="color: rgba(255,255,255,0.08);">¿Ya tienes cuenta?</span>
+        <div class="register-footer">
+            <span>¿Ya tienes cuenta?</span>
             <a asp-action="Login">Inicia sesión</a>
         </div>
     </div>

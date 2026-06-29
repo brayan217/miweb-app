@@ -1,7 +1,7 @@
-﻿@model IEnumerable<LOGIN.Models.CarritoItem>
+﻿@model IEnumerable<MiWeb.Models.CarritoItem>
 
 @{
-    ViewData["Title"] = "Carrito - ROG Inventory";
+    ViewData["Title"] = "Carrito - NEO STORE";
     var total = ViewBag.Total as decimal? ?? 0;
 }
 
@@ -18,11 +18,10 @@
         font-size: 2.5rem;
         font-weight: 900;
         letter-spacing: -1px;
-        color: #fff;
     }
 
     .carrito-rog-container h1 span {
-        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -43,7 +42,7 @@
 
     .carrito-rog-item:hover {
         background: rgba(25, 25, 45, 0.8);
-        border-color: rgba(255,0,68,0.08);
+        border-color: rgba(0,207,255,0.08);
         transform: translateY(-2px);
     }
 
@@ -59,11 +58,11 @@
     }
 
     .carrito-rog-item .info small {
-        color: rgba(255,255,255,0.15);
+        color: #FFFFFF;
     }
 
     .carrito-rog-item .precio {
-        color: #ff0044;
+        color: #00CFFF;
         font-weight: 700;
         font-size: 1.1rem;
         min-width: 100px;
@@ -87,13 +86,13 @@
 
     .carrito-rog-item .cantidad input:focus {
         outline: none;
-        border-color: #ff0044;
+        border-color: #00CFFF;
     }
 
     .btn-rog-cantidad {
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.06);
-        color: rgba(255,255,255,0.3);
+        color: #FFFFFF;
         border-radius: 50px;
         width: 30px;
         height: 30px;
@@ -105,14 +104,14 @@
     }
 
     .btn-rog-cantidad:hover {
-        border-color: #ff0044;
+        border-color: #00CFFF;
         color: #fff;
     }
 
     .btn-rog-eliminar {
         background: transparent;
         border: none;
-        color: rgba(255,255,255,0.08);
+        color: #FFFFFF;
         transition: all 0.3s ease;
         font-size: 1.2rem;
         cursor: pointer;
@@ -131,20 +130,20 @@
     }
 
     .carrito-rog-total .total-label {
-        color: rgba(255,255,255,0.15);
+        color: #FFFFFF;
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
 
     .carrito-rog-total .total-precio {
-        color: #ff0044;
+        color: #00CFFF;
         font-size: 2rem;
         font-weight: 900;
     }
 
     .btn-rog-primary {
-        background: linear-gradient(135deg, #ff0044, #ff6b35);
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
         color: #fff;
         border: none;
         border-radius: 50px;
@@ -160,14 +159,14 @@
 
     .btn-rog-primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 0 30px rgba(255,0,68,0.2);
+        box-shadow: 0 0 30px rgba(0,207,255,0.2);
         color: #fff;
     }
 
     .btn-rog-outline {
         background: transparent;
         border: 1px solid rgba(255,255,255,0.06);
-        color: rgba(255,255,255,0.3);
+        color: #FFFFFF;
         border-radius: 50px;
         padding: 14px 40px;
         font-weight: 600;
@@ -180,7 +179,7 @@
     }
 
     .btn-rog-outline:hover {
-        border-color: #ff0044;
+        border-color: #00CFFF;
         color: #fff;
     }
 
@@ -191,24 +190,41 @@
 
     .carrito-rog-vacio i {
         font-size: 4rem;
-        color: rgba(255,255,255,0.03);
+        color: #FFFFFF;
         margin-bottom: 20px;
     }
 
     .carrito-rog-vacio h3 {
-        color: rgba(255,255,255,0.05);
+        color: #FFFFFF;
         font-weight: 300;
     }
 
     .carrito-rog-vacio p {
-        color: rgba(255,255,255,0.03);
+        color: #FFFFFF;
+    }
+
+    @@media (max-width: 768px) {
+        .carrito-rog-item {
+            flex-direction: column;
+            align-items: stretch;
+            text-align: center;
+        }
+
+        .carrito-rog-item .cantidad {
+            justify-content: center;
+        }
+
+        .carrito-rog-total {
+            flex-direction: column;
+            text-align: center;
+        }
     }
 </style>
 
 <div class="carrito-rog-container">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-            <h1><i class="bi bi-cart3 me-2" style="color: #ff0044;"></i>Mi <span>Carrito</span></h1>
+            <h1><i class="bi bi-cart3 me-2" style="color: #00CFFF;"></i>Mi <span>Carrito</span></h1>
             <a asp-action="Index" class="btn-rog-outline">
                 <i class="bi bi-arrow-left me-2"></i>Seguir comprando
             </a>

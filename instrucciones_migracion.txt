@@ -1,0 +1,14 @@
+He elegido agregar una migración que añade la columna 'Password' a la tabla Usuarios.
+Siguientes pasos sugeridos (ejecutar en la consola del proyecto):
+
+1) Crear la migración:
+   dotnet ef migrations add AddPasswordToUsuarios
+
+2) Aplicar la migración a la base de datos:
+   dotnet ef database update
+
+Si prefieres que aplique los cambios de código yo puedo:
+- Añadir la propiedad si falta en la entidad Usuario.
+- Generar la clase de migración (si tengo acceso al proyecto fuente aquí).
+
+¿Deseas que añada la propiedad y genere la migración automáticamente en el código del proyecto? (Necesito permiso para editar archivos)

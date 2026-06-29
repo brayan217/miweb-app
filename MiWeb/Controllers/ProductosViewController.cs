@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LOGIN.Data;
-using LOGIN.Models;
+using MiWeb.Data;
+using MiWeb.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MiWeb.Controllers
@@ -38,7 +38,7 @@ namespace MiWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,Cantidad,ImagenUrl")] Producto producto)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,Cantidad")] Producto producto)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace MiWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Precio,Cantidad,ImagenUrl")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Precio,Cantidad")] Producto producto)
         {
             if (id != producto.Id) return NotFound();
 

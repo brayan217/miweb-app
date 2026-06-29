@@ -1,8 +1,7 @@
-using LOGIN.Models;
 using Microsoft.AspNetCore.Mvc;
 using MiWeb.Models;
 
-namespace LOGIN.Controllers
+namespace MiWeb.Controllers
 {
     public class HomeController : Controller
     {

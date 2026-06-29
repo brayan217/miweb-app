@@ -1,8 +1,7 @@
-﻿using LOGIN.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
+﻿using Microsoft.EntityFrameworkCore;
+using MiWeb.Models;
 
-namespace LOGIN.Data
+namespace MiWeb.Data
 {
     public class ApplicationDbContext : DbContext
     {

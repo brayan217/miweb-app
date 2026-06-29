@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LOGIN.Data;
-using LOGIN.Models;
+using MiWeb.Data;
+using MiWeb.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
 
-
-namespace LOGIN.Controllers
+namespace MiWeb.Controllers
 {
     public class AccountController : Controller
     {
@@ -51,10 +50,14 @@ namespace LOGIN.Controllers
                 return View();
             }
 
-            // ⭐ SIN ROL - Solo guardamos lo básico
             HttpContext.Session.SetString("UsuarioId", usuario.Id.ToString());
             HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre ?? "Usuario");
             HttpContext.Session.SetString("UsuarioEmail", usuario.Email ?? "");
+
+            if (Recordarme)
+            {
+                // Opcional
+            }
 
             TempData["Success"] = $"¡Bienvenido de nuevo, {usuario.Nombre}!";
             return RedirectToAction("Index", "Home");

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LOGIN.Models
+namespace MiWeb.Models
 {
     public class LoginViewModel
     {

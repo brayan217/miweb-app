@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LOGIN.Models
+namespace MiWeb.Models
 {
     public class PedidoDetalle
     {

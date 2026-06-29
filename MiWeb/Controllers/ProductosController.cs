@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using LOGIN.Data;
-using LOGIN.Models;
+using MiWeb.Data;
+using MiWeb.Models;
 
 namespace MiWeb.Controllers
 {

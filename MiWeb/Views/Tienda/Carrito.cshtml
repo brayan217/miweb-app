@@ -1,5 +1,4 @@
-﻿@model IEnumerable<MiWeb.Models.CarritoItem>
-
+﻿@model List<MiWeb.Models.CarritoItem>
 @{
     ViewData["Title"] = "Carrito - NEO STORE";
     var total = ViewBag.Total as decimal? ?? 0;
@@ -10,158 +9,193 @@
         background: #0a0a0a;
         min-height: 100vh;
         padding: 40px 0;
-        color: #fff;
+        color: #FFFFFF;
         font-family: 'Inter', sans-serif;
     }
 
-    .carrito-rog-container h1 {
-        font-size: 2.5rem;
-        font-weight: 900;
-        letter-spacing: -1px;
-    }
+        .carrito-rog-container h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #FFFFFF;
+        }
 
-    .carrito-rog-container h1 span {
-        background: linear-gradient(135deg, #00CFFF, #7A00FF);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+            .carrito-rog-container h1 span {
+                background: linear-gradient(135deg, #00CFFF, #7A00FF);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
 
-    .carrito-rog-item {
+    .carrito-rog-card {
         background: rgba(18, 18, 30, 0.6);
         border: 1px solid rgba(255,255,255,0.03);
         border-radius: 16px;
-        padding: 20px;
-        margin-bottom: 15px;
-        transition: all 0.3s ease;
+        padding: 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    /* ⭐ ALERTA DE PAGO EXITOSO - BLANCO ⭐ */
+    .alert-pago {
+        background: rgba(0,207,255,0.1);
+        border: 1px solid rgba(0,207,255,0.2);
+        border-radius: 12px;
+        color: #FFFFFF;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        animation: fadeIn 0.5s ease;
+    }
+
+        .alert-pago i {
+            color: #00CFFF;
+        }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .carrito-item {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
         gap: 15px;
     }
 
-    .carrito-rog-item:hover {
-        background: rgba(25, 25, 45, 0.8);
-        border-color: rgba(0,207,255,0.08);
-        transform: translateY(-2px);
-    }
+        .carrito-item:last-child {
+            border-bottom: none;
+        }
 
-    .carrito-rog-item .info {
-        flex: 1;
-        min-width: 150px;
-    }
+        .carrito-item .info {
+            flex: 1;
+        }
 
-    .carrito-rog-item .info h5 {
-        color: #fff;
-        font-weight: 700;
-        margin: 0;
-    }
+            .carrito-item .info .nombre {
+                color: #FFFFFF;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
 
-    .carrito-rog-item .info small {
-        color: #FFFFFF;
-    }
+            .carrito-item .info .descripcion {
+                color: #FFFFFF;
+                font-size: 0.85rem;
+            }
 
-    .carrito-rog-item .precio {
-        color: #00CFFF;
-        font-weight: 700;
-        font-size: 1.1rem;
-        min-width: 100px;
-    }
+        .carrito-item .precio {
+            color: #00CFFF;
+            font-weight: 700;
+            font-size: 1.1rem;
+            min-width: 100px;
+            text-align: right;
+        }
 
-    .carrito-rog-item .cantidad {
+        .carrito-item .cantidad-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .carrito-item .cantidad-control button {
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 8px;
+                color: #FFFFFF;
+                width: 32px;
+                height: 32px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .carrito-item .cantidad-control button:hover {
+                    background: rgba(0,207,255,0.1);
+                    border-color: #00CFFF;
+                }
+
+            .carrito-item .cantidad-control .cantidad {
+                min-width: 30px;
+                text-align: center;
+                font-weight: 600;
+                color: #FFFFFF;
+            }
+
+        .carrito-item .btn-eliminar {
+            background: rgba(255,71,87,0.05);
+            border: 1px solid rgba(255,71,87,0.1);
+            border-radius: 8px;
+            color: #ff4757;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+            .carrito-item .btn-eliminar:hover {
+                background: rgba(255,71,87,0.1);
+            }
+
+    .carrito-total {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 10px;
-    }
-
-    .carrito-rog-item .cantidad input {
-        width: 60px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: 8px;
-        color: #fff;
-        padding: 5px 10px;
-        text-align: center;
-    }
-
-    .carrito-rog-item .cantidad input:focus {
-        outline: none;
-        border-color: #00CFFF;
-    }
-
-    .btn-rog-cantidad {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.06);
-        color: #FFFFFF;
-        border-radius: 50px;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .btn-rog-cantidad:hover {
-        border-color: #00CFFF;
-        color: #fff;
-    }
-
-    .btn-rog-eliminar {
-        background: transparent;
-        border: none;
-        color: #FFFFFF;
-        transition: all 0.3s ease;
-        font-size: 1.2rem;
-        cursor: pointer;
-    }
-
-    .btn-rog-eliminar:hover {
-        color: #ef476f;
-    }
-
-    .carrito-rog-total {
-        background: rgba(18, 18, 30, 0.6);
-        border: 1px solid rgba(255,255,255,0.03);
-        border-radius: 16px;
-        padding: 25px 30px;
+        padding: 20px 0;
         margin-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.03);
     }
 
-    .carrito-rog-total .total-label {
-        color: #FFFFFF;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
+        .carrito-total .label {
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    .carrito-rog-total .total-precio {
-        color: #00CFFF;
-        font-size: 2rem;
-        font-weight: 900;
-    }
+        .carrito-total .precio {
+            color: #00CFFF;
+            font-size: 2rem;
+            font-weight: 900;
+        }
 
     .btn-rog-primary {
         background: linear-gradient(135deg, #00CFFF, #7A00FF);
-        color: #fff;
+        color: #FFFFFF;
         border: none;
         border-radius: 50px;
-        padding: 14px 40px;
+        padding: 16px 50px;
         font-weight: 700;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         transition: all 0.3s ease;
         text-decoration: none;
         display: inline-block;
+        cursor: pointer;
     }
 
-    .btn-rog-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 0 30px rgba(0,207,255,0.2);
-        color: #fff;
-    }
+        .btn-rog-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(0,207,255,0.2);
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .btn-rog-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
 
     .btn-rog-outline {
         background: transparent;
@@ -178,44 +212,75 @@
         display: inline-block;
     }
 
-    .btn-rog-outline:hover {
-        border-color: #00CFFF;
-        color: #fff;
-    }
+        .btn-rog-outline:hover {
+            border-color: #00CFFF;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
 
-    .carrito-rog-vacio {
+    /* ⭐ EMPTY CART - TODO BLANCO ⭐ */
+    .empty-cart {
         text-align: center;
-        padding: 80px 20px;
+        padding: 60px 0;
     }
 
-    .carrito-rog-vacio i {
-        font-size: 4rem;
-        color: #FFFFFF;
-        margin-bottom: 20px;
+        .empty-cart i {
+            font-size: 4rem;
+            color: rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h4 {
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .empty-cart p {
+            color: #FFFFFF;
+            font-size: 1rem;
+        }
+
+    .spinner-rog {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255,255,255,0.1);
+        border-top-color: #FFFFFF;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin-right: 10px;
+        vertical-align: middle;
     }
 
-    .carrito-rog-vacio h3 {
-        color: #FFFFFF;
-        font-weight: 300;
-    }
-
-    .carrito-rog-vacio p {
-        color: #FFFFFF;
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     @@media (max-width: 768px) {
-        .carrito-rog-item {
+        .carrito-item {
             flex-direction: column;
             align-items: stretch;
             text-align: center;
         }
 
-        .carrito-rog-item .cantidad {
-            justify-content: center;
-        }
+            .carrito-item .precio {
+                text-align: center;
+            }
 
-        .carrito-rog-total {
+            .carrito-item .cantidad-control {
+                justify-content: center;
+            }
+
+            .carrito-item .btn-eliminar {
+                margin-top: 10px;
+            }
+
+        .carrito-total {
             flex-direction: column;
+            gap: 15px;
             text-align: center;
         }
     }
@@ -223,119 +288,154 @@
 
 <div class="carrito-rog-container">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-            <h1><i class="bi bi-cart3 me-2" style="color: #00CFFF;"></i>Mi <span>Carrito</span></h1>
-            <a asp-action="Index" class="btn-rog-outline">
-                <i class="bi bi-arrow-left me-2"></i>Seguir comprando
-            </a>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h1 class="mb-4">Mi <span>Carrito</span></h1>
+
+                <!-- ⭐ MENSAJE DE PAGO REALIZADO ⭐ -->
+                @if (TempData["MensajePago"] != null)
+                {
+                    <div class="alert-pago">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        @TempData["MensajePago"]
+                    </div>
+                }
+
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert-pago" style="color: #ff4757; border-color: rgba(255,71,87,0.2); background: rgba(255,71,87,0.1);">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        @TempData["Error"]
+                    </div>
+                }
+
+                @if (!Model.Any())
+                {
+                    <div class="carrito-rog-card">
+                        <div class="empty-cart">
+                            <i class="bi bi-cart-x"></i>
+                            <h4>Tu carrito está vacío</h4>
+                            <p>¡Explora nuestra tienda y encuentra los mejores productos gamer!</p>
+                            <a asp-action="Index" class="btn-rog-primary mt-3">
+                                <i class="bi bi-shop me-2"></i>Ir a la tienda
+                            </a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="carrito-rog-card">
+                        @foreach (var item in Model)
+                        {
+                            <div class="carrito-item" id="item-@item.Id">
+                                <div class="info">
+                                    <div class="nombre">@item.Producto?.Nombre</div>
+                                    <div class="descripcion">@item.Producto?.Descripcion</div>
+                                </div>
+                                <div class="cantidad-control">
+                                    <button onclick="updateQuantity(@item.Id, -1)">-</button>
+                                    <span class="cantidad" id="cantidad-@item.Id">@item.Cantidad</span>
+                                    <button onclick="updateQuantity(@item.Id, 1)">+</button>
+                                </div>
+                                <div class="precio" id="subtotal-@item.Id">
+                                    Bs @(item.Cantidad * item.Producto?.Precio ?? 0)
+                                </div>
+                                <button class="btn-eliminar" onclick="removeItem(@item.Id)">
+                                    <i class="bi bi-trash3"></i> Eliminar
+                                </button>
+                            </div>
+                        }
+
+                        <div class="carrito-total">
+                            <div>
+                                <div class="label">Total a pagar</div>
+                            </div>
+                            <div>
+                                <div class="precio" id="totalCarrito">Bs @total.ToString("N0")</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-end; margin-top: 20px;">
+                            <a asp-action="Index" class="btn-rog-outline">
+                                <i class="bi bi-arrow-left me-2"></i>Seguir comprando
+                            </a>
+                            <form asp-action="ProcesarPago" method="post" style="display: inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-rog-primary" id="pagarBtn">
+                                    <i class="bi bi-credit-card me-2"></i>Pagar ahora
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var item in Model)
-            {
-                <div class="carrito-rog-item" data-item-id="@item.Id">
-                    <div class="info">
-                        <h5>@item.Producto?.Nombre</h5>
-                        <small>@item.Producto?.Descripcion</small>
-                    </div>
-                    <div class="precio">
-                        Bs @(item.Producto?.Precio.ToString("N0") ?? "0")
-                    </div>
-                    <div class="cantidad">
-                        <button class="btn-rog-cantidad" data-action="minus" data-id="@item.Id">−</button>
-                        <input type="number" class="cantidad-input" data-id="@item.Id" value="@item.Cantidad" min="1" max="@(item.Producto?.Cantidad ?? 99)" />
-                        <button class="btn-rog-cantidad" data-action="plus" data-id="@item.Id">+</button>
-                        <button class="btn-rog-eliminar" data-id="@item.Id" title="Eliminar">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </div>
-                </div>
-            }
-
-            <div class="carrito-rog-total d-flex justify-content-between align-items-center flex-wrap gap-3">
-                <div>
-                    <span class="total-label">Total</span>
-                    <div class="total-precio">Bs @total.ToString("N0")</div>
-                </div>
-                <div class="d-flex gap-3">
-                    <a asp-action="Checkout" class="btn-rog-primary">
-                        <i class="bi bi-credit-card me-2"></i>Proceder al pago
-                    </a>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="carrito-rog-vacio">
-                <i class="bi bi-cart-x"></i>
-                <h3>Tu carrito está vacío</h3>
-                <p>Explora nuestros productos y agrega lo que necesites</p>
-                <a asp-action="Index" class="btn-rog-primary mt-3 d-inline-block">
-                    <i class="bi bi-shop me-2"></i>Ir a la tienda
-                </a>
-            </div>
-        }
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        function actualizarCantidad(itemId, cantidad) {
-            $.post('/Tienda/ActualizarCantidad', { itemId: itemId, cantidad: cantidad })
-                .done(function(response) {
-                    if (response.success) {
-                        if (response.itemRemoved) {
-                            location.reload();
-                        } else {
-                            location.reload();
-                        }
-                    } else {
-                        alert(response.message || 'Error al actualizar');
+    function updateQuantity(itemId, change) {
+        const cantidadElement = document.getElementById('cantidad-' + itemId);
+        let cantidad = parseInt(cantidadElement.textContent) + change;
+
+        if (cantidad < 1) cantidad = 1;
+
+        fetch('@Url.Action("ActualizarCantidad", "Tienda")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': '@Html.AntiForgeryToken()'
+            },
+            body: JSON.stringify({ itemId: itemId, cantidad: cantidad })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                cantidadElement.textContent = cantidad;
+                document.getElementById('subtotal-' + itemId).textContent = 'Bs ' + data.subtotal.toLocaleString('es-BO');
+                document.getElementById('totalCarrito').textContent = 'Bs ' + data.total.toLocaleString('es-BO');
+                if (data.itemRemoved) {
+                    document.getElementById('item-' + itemId).remove();
+                    if (document.querySelectorAll('.carrito-item').length === 0) {
+                        location.reload();
                     }
-                })
-                .fail(function() {
-                    alert('Error al actualizar el carrito');
-                });
-        }
-
-        $('.btn-rog-cantidad').click(function() {
-            var id = parseInt($(this).data('id'));
-            var input = $('.cantidad-input[data-id="' + id + '"]');
-            var cantidad = parseInt(input.val());
-
-            if ($(this).data('action') === 'plus') {
-                cantidad++;
+                }
             } else {
-                cantidad--;
+                alert(data.message || 'Error al actualizar el carrito');
             }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
-            if (cantidad < 1) return;
-            if (cantidad > parseInt(input.max)) {
-                alert('Stock insuficiente');
-                return;
-            }
+    function removeItem(itemId) {
+        if (confirm('¿Eliminar este producto del carrito?')) {
+            fetch('@Url.Action("ActualizarCantidad", "Tienda")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': '@Html.AntiForgeryToken()'
+                },
+                body: JSON.stringify({ itemId: itemId, cantidad: 0 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('item-' + itemId).remove();
+                    document.getElementById('totalCarrito').textContent = 'Bs ' + data.total.toLocaleString('es-BO');
+                    if (document.querySelectorAll('.carrito-item').length === 0) {
+                        location.reload();
+                    }
+                } else {
+                    alert(data.message || 'Error al eliminar el producto');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
 
-            actualizarCantidad(id, cantidad);
-        });
-
-        $('.cantidad-input').change(function() {
-            var id = parseInt($(this).data('id'));
-            var cantidad = parseInt($(this).val());
-            if (isNaN(cantidad) || cantidad < 1) cantidad = 1;
-            if (cantidad > parseInt($(this).max)) {
-                alert('Stock insuficiente');
-                cantidad = parseInt($(this).max);
-            }
-            actualizarCantidad(id, cantidad);
-        });
-
-        $('.btn-rog-eliminar').click(function() {
-            var id = parseInt($(this).data('id'));
-            if (confirm('¿Eliminar este producto del carrito?')) {
-                actualizarCantidad(id, 0);
-            }
-        });
+    document.querySelector('form[asp-action="ProcesarPago"]')?.addEventListener('submit', function(e) {
+        const btn = document.getElementById('pagarBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-rog"></span>Procesando...';
     });
 </script>

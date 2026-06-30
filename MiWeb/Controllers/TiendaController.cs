@@ -28,7 +28,7 @@ namespace MiWeb.Controllers
             return 0;
         }
 
-        // GET: Tienda con búsqueda
+        // GET: Tienda
         public async Task<IActionResult> Index(string searchString)
         {
             if (!UsuarioLogueado())
@@ -157,27 +157,8 @@ namespace MiWeb.Controllers
             });
         }
 
-        // GET: Checkout
+        // GET: Checkout (Formulario de pago)
         public async Task<IActionResult> Checkout()
-        {
-            if (!UsuarioLogueado())
-                return RedirectToAction("Login", "Account");
-
-            var carritoItems = await _context.CarritoItems
-                .Include(c => c.Producto)
-                .Where(c => c.UsuarioId == GetUsuarioId())
-                .ToListAsync();
-
-            if (!carritoItems.Any())
-                return RedirectToAction("Carrito");
-
-            ViewBag.Total = carritoItems.Sum(c => c.Cantidad * c.Producto!.Precio);
-            return View(carritoItems);
-        }
-
-        // POST: Confirmar pedido
-        [HttpPost]
-        public async Task<IActionResult> ConfirmarPedido(string direccion, string metodoPago)
         {
             if (!UsuarioLogueado())
                 return RedirectToAction("Login", "Account");
@@ -191,6 +172,47 @@ namespace MiWeb.Controllers
             if (!carritoItems.Any())
                 return RedirectToAction("Carrito");
 
+            ViewBag.Total = carritoItems.Sum(c => c.Cantidad * c.Producto!.Precio);
+            return View(carritoItems);
+        }
+
+        // ⭐⭐⭐ PROCESAR PAGO CON DATOS DEL FORMULARIO ⭐⭐⭐
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProcesarPago(string nombre, string direccion, string metodoPago)
+        {
+            if (!UsuarioLogueado())
+                return RedirectToAction("Login", "Account");
+
+            var usuarioId = GetUsuarioId();
+            var carritoItems = await _context.CarritoItems
+                .Include(c => c.Producto)
+                .Where(c => c.UsuarioId == usuarioId)
+                .ToListAsync();
+
+            if (!carritoItems.Any())
+                return RedirectToAction("Carrito");
+
+            // Validar datos
+            if (string.IsNullOrEmpty(nombre))
+            {
+                TempData["Error"] = "El nombre es obligatorio";
+                return RedirectToAction("Checkout");
+            }
+
+            if (string.IsNullOrEmpty(direccion))
+            {
+                TempData["Error"] = "La dirección es obligatoria";
+                return RedirectToAction("Checkout");
+            }
+
+            if (string.IsNullOrEmpty(metodoPago))
+            {
+                TempData["Error"] = "Debes seleccionar un método de pago";
+                return RedirectToAction("Checkout");
+            }
+
+            // Verificar stock
             foreach (var item in carritoItems)
             {
                 if (item.Producto!.Cantidad < item.Cantidad)
@@ -200,6 +222,7 @@ namespace MiWeb.Controllers
                 }
             }
 
+            // Crear el pedido
             var total = carritoItems.Sum(c => c.Cantidad * c.Producto!.Precio);
             var pedido = new Pedido
             {
@@ -208,12 +231,14 @@ namespace MiWeb.Controllers
                 DireccionEnvio = direccion,
                 MetodoPago = metodoPago,
                 NumeroReferencia = "REF-" + DateTime.Now.Ticks.ToString().Substring(0, 8),
-                Estado = EstadoPedido.Confirmado
+                Estado = EstadoPedido.Confirmado,
+                FechaPedido = DateTime.Now
             };
 
             _context.Pedidos.Add(pedido);
             await _context.SaveChangesAsync();
 
+            // Crear detalles y actualizar stock
             foreach (var item in carritoItems)
             {
                 var detalle = new PedidoDetalle
@@ -229,11 +254,14 @@ namespace MiWeb.Controllers
                 _context.Entry(item.Producto).State = EntityState.Modified;
             }
 
+            // Vaciar carrito
             _context.CarritoItems.RemoveRange(carritoItems);
             await _context.SaveChangesAsync();
 
-            TempData["Mensaje"] = "🎉 ¡Compra realizada con éxito! Tu pedido ha sido confirmado.";
-            return RedirectToAction("MisCompras");
+            // ⭐ MENSAJE DE PAGO REALIZADO ⭐
+            TempData["MensajePago"] = "✅ Pago realizado";
+
+            return RedirectToAction("Carrito");
         }
 
         // GET: Mis Compras

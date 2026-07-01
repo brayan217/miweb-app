@@ -157,7 +157,7 @@ namespace MiWeb.Controllers
             });
         }
 
-        // GET: Checkout (Formulario de pago)
+        // GET: Checkout
         public async Task<IActionResult> Checkout()
         {
             if (!UsuarioLogueado())
@@ -176,7 +176,7 @@ namespace MiWeb.Controllers
             return View(carritoItems);
         }
 
-        // ⭐⭐⭐ PROCESAR PAGO CON DATOS DEL FORMULARIO ⭐⭐⭐
+        // ⭐ PROCESAR PAGO
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProcesarPago(string nombre, string direccion, string metodoPago)
@@ -258,10 +258,41 @@ namespace MiWeb.Controllers
             _context.CarritoItems.RemoveRange(carritoItems);
             await _context.SaveChangesAsync();
 
-            // ⭐ MENSAJE DE PAGO REALIZADO ⭐
-            TempData["MensajePago"] = "✅ Pago realizado";
+            // ⭐ Redirigir al recibo
+            return RedirectToAction("Recibo", new { id = pedido.Id });
+        }
 
-            return RedirectToAction("Carrito");
+        // ⭐ GET: Recibo de compra
+        public async Task<IActionResult> Recibo(int id)
+        {
+            if (!UsuarioLogueado())
+                return RedirectToAction("Login", "Account");
+
+            var pedido = await _context.Pedidos
+                .Include(p => p.Detalles!)
+                .ThenInclude(d => d.Producto)
+                .FirstOrDefaultAsync(p => p.Id == id && p.UsuarioId == GetUsuarioId());
+
+            if (pedido == null)
+                return NotFound();
+
+            var usuario = await _context.Usuarios.FindAsync(pedido.UsuarioId);
+
+            var recibo = new ReciboViewModel
+            {
+                PedidoId = pedido.Id,
+                NumeroReferencia = pedido.NumeroReferencia,
+                Fecha = pedido.FechaPedido.ToString("dd/MM/yyyy HH:mm"),
+                Cliente = usuario?.Nombre ?? "Cliente",
+                Email = usuario?.Email ?? "",
+                Direccion = pedido.DireccionEnvio,
+                MetodoPago = pedido.MetodoPago,
+                Subtotal = pedido.Total,
+                Total = pedido.Total,
+                Detalles = pedido.Detalles.ToList()
+            };
+
+            return View(recibo);
         }
 
         // GET: Mis Compras

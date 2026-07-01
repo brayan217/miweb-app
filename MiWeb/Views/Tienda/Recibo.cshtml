@@ -1,0 +1,346 @@
+﻿@model MiWeb.Models.ReciboViewModel
+@{
+    Layout = null;
+    var empresa = "NEO STORE";
+    var direccionEmpresa = "Calle Gamer #123, La Paz - Bolivia";
+    var telefonoEmpresa = "+591 2 1234567";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Recibo de Compra - NEO STORE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            padding: 40px;
+            color: #333;
+        }
+        .recibo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #00CFFF;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #0a0a0a;
+            letter-spacing: -1px;
+        }
+        .logo h1 span { color: #00CFFF; }
+        .logo p {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .recibo-info {
+            text-align: right;
+        }
+        .recibo-info .titulo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #00CFFF;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .recibo-info .numero {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .recibo-info .numero small {
+            font-size: 12px;
+            color: #aaa;
+        }
+        .badge-pagado {
+            display: inline-block;
+            background: #00CFFF;
+            color: #fff;
+            padding: 4px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        .seccion {
+            margin-bottom: 25px;
+        }
+        .seccion h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        .datos-cliente {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .datos-cliente .item {
+            font-size: 14px;
+            padding: 4px 0;
+        }
+        .datos-cliente .item .label {
+            color: #888;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+        }
+        .datos-cliente .item .valor {
+            font-weight: 600;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        table th {
+            background: #f8f8f8;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            border-bottom: 2px solid #eee;
+        }
+        table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        table td.text-center { text-align: center; }
+        table td.text-right { text-align: right; }
+        .totales {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            text-align: right;
+        }
+        .totales .linea {
+            display: flex;
+            justify-content: flex-end;
+            gap: 40px;
+            padding: 4px 0;
+            font-size: 14px;
+        }
+        .totales .linea.total-final {
+            font-size: 20px;
+            font-weight: 700;
+            padding-top: 10px;
+            border-top: 2px solid #00CFFF;
+            margin-top: 5px;
+            color: #00CFFF;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-size: 12px;
+            color: #aaa;
+        }
+        .footer p { margin: 3px 0; }
+        .footer .gracias {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00CFFF;
+            margin-bottom: 5px;
+        }
+        .acciones {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .btn-descargar {
+            display: inline-block;
+            background: #00CFFF;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-descargar:hover {
+            background: #0088aa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,207,255,0.3);
+        }
+        .btn-volver {
+            background: #666;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-volver:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+        .text-muted { color: #aaa; font-size: 12px; }
+
+        @@media print {
+            body { background: #fff; padding: 20px; }
+            .recibo-container { box-shadow: none; border: none; padding: 20px; }
+            .btn-descargar, .btn-volver { display: none; }
+            .header { border-bottom-color: #00CFFF; }
+            .badge-pagado { background: #00CFFF !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+
+        @@media (max-width: 600px) {
+            .header { flex-direction: column; text-align: center; }
+            .recibo-info { margin-top: 15px; text-align: center; }
+            .datos-cliente { grid-template-columns: 1fr; }
+            .totales .linea { justify-content: center; gap: 20px; }
+            .acciones { flex-direction: column; align-items: center; }
+            .btn-descargar, .btn-volver { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="recibo-container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <h1>NEO <span>STORE</span></h1>
+                <p>Tienda Gamer</p>
+            </div>
+            <div class="recibo-info">
+                <div class="titulo">Recibo de Compra</div>
+                <div class="numero">#@Model.PedidoId</div>
+                <div class="numero"><small>Ref: @Model.NumeroReferencia</small></div>
+                <div><span class="badge-pagado">✅ Pagado</span></div>
+            </div>
+        </div>
+
+        <!-- DATOS DEL CLIENTE -->
+        <div class="seccion">
+            <h3>📋 Datos del Cliente</h3>
+            <div class="datos-cliente">
+                <div class="item">
+                    <span class="label">Cliente</span>
+                    <span class="valor">@Model.Cliente</span>
+                </div>
+                <div class="item">
+                    <span class="label">Email</span>
+                    <span class="valor">@Model.Email</span>
+                </div>
+                <div class="item">
+                    <span class="label">Fecha</span>
+                    <span class="valor">@Model.Fecha</span>
+                </div>
+                <div class="item">
+                    <span class="label">Método de Pago</span>
+                    <span class="valor">@Model.MetodoPago</span>
+                </div>
+                <div class="item" style="grid-column: span 2;">
+                    <span class="label">📍 Dirección de Envío</span>
+                    <span class="valor">@Model.Direccion</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCTOS -->
+        <div class="seccion">
+            <h3>🛒 Productos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th style="text-align:center;">Cantidad</th>
+                        <th style="text-align:right;">Precio</th>
+                        <th style="text-align:right;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Detalles)
+                    {
+                        <tr>
+                            <td>@item.Producto?.Nombre</td>
+                            <td style="text-align:center;">@item.Cantidad</td>
+                            <td style="text-align:right;">Bs @item.PrecioUnitario.ToString("N0")</td>
+                            <td style="text-align:right;">Bs @(item.Cantidad * item.PrecioUnitario).ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TOTALES -->
+        <div class="totales">
+            <div class="linea">
+                <span>Subtotal</span>
+                <span>Bs @Model.Subtotal.ToString("N0")</span>
+            </div>
+            <div class="linea">
+                <span>Envío</span>
+                <span>Bs 0</span>
+            </div>
+            <div class="linea total-final">
+                <span>TOTAL</span>
+                <span>Bs @Model.Total.ToString("N0")</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p class="gracias">🎮 ¡Gracias por tu compra!</p>
+            <p>@empresa - @direccionEmpresa</p>
+            <p>📞 @telefonoEmpresa</p>
+            <p style="font-size:10px; color:#ccc; margin-top:10px;">
+                Este documento es un comprobante de pago válido.
+            </p>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="acciones">
+            <button class="btn-descargar" onclick="window.print()">
+                ⬇ Descargar / Imprimir
+            </button>
+            <a href="/Tienda/MisCompras" class="btn-volver">
+                ↩ Volver a mis compras
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // La función window.print() abre el diálogo de impresión
+        // donde el usuario puede guardar como PDF
+        console.log('📄 Recibo listo para imprimir/descargar');
+    </script>
+</body>
+</html>

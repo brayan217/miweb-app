@@ -72,6 +72,7 @@
         display: flex;
         gap: 15px;
         margin-top: 30px;
+        flex-wrap: wrap;
     }
 
     .btn-hero-primary {
@@ -121,10 +122,251 @@
             box-shadow: 0 0 30px rgba(0,207,255,0.03);
         }
 
+    /* ⭐ BOTÓN DE VOZ ⭐ */
+    .btn-voice {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.04);
+        color: rgba(255,255,255,0.3);
+        border-radius: 50px;
+        padding: 16px 45px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.4s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .btn-voice:hover {
+            border-color: #00CFFF;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(0,207,255,0.03);
+        }
+
+        .btn-voice.active {
+            border-color: #ffc107;
+            color: #ffc107;
+            animation: pulse-voice 1.5s ease-in-out infinite;
+        }
+
+    @@keyframes pulse-voice {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(255,193,7,0.05);
+        }
+
+        50% {
+            box-shadow: 0 0 40px rgba(255,193,7,0.15);
+        }
+    }
+
     .hero-full .hero-image {
         max-width: 100%;
         filter: drop-shadow(0 0 80px rgba(0,207,255,0.04));
     }
+
+    /* ⭐ MODAL DE VOZ ⭐ */
+    .voice-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 10, 10, 0.92);
+        backdrop-filter: blur(15px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+        .voice-modal.active {
+            display: flex;
+        }
+
+    .voice-modal-content {
+        width: 100%;
+        max-width: 600px;
+        background: rgba(18, 18, 30, 0.8);
+        border: 1px solid rgba(255,193,7,0.15);
+        border-radius: 28px;
+        padding: 40px;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+
+        .voice-modal-content .voice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .voice-modal-content .voice-header h2 {
+                color: #ffc107;
+                font-size: 1.5rem;
+                font-weight: 900;
+                margin: 0;
+            }
+
+            .voice-modal-content .voice-header .btn-close-voice {
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.03);
+                color: rgba(255,255,255,0.3);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .voice-modal-content .voice-header .btn-close-voice:hover {
+                    border-color: #ff4757;
+                    color: #ff4757;
+                }
+
+    .voice-status {
+        background: rgba(255,193,7,0.05);
+        border: 1px solid rgba(255,193,7,0.1);
+        border-radius: 16px;
+        padding: 12px 18px;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+    }
+
+        .voice-status.ok {
+            background: rgba(0,207,255,0.05);
+            border-color: rgba(0,207,255,0.1);
+            color: #00CFFF;
+        }
+
+        .voice-status.error {
+            background: rgba(255,71,87,0.05);
+            border-color: rgba(255,71,87,0.1);
+            color: #ff4757;
+        }
+
+    .voice-textarea {
+        width: 100%;
+        min-height: 200px;
+        resize: vertical;
+        background: rgba(0,0,0,0.3);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 16px;
+        padding: 18px;
+        outline: none;
+        font-size: 16px;
+        line-height: 1.6;
+        font-family: inherit;
+    }
+
+        .voice-textarea:focus {
+            border-color: rgba(255,193,7,0.2);
+            box-shadow: 0 0 0 3px rgba(255,193,7,0.05);
+        }
+
+    .voice-preview {
+        min-height: 28px;
+        color: rgba(255,255,255,0.2);
+        margin-top: 12px;
+        font-style: italic;
+        font-size: 0.85rem;
+    }
+
+    .voice-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+        .voice-buttons button {
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+            .voice-buttons button:hover {
+                transform: translateY(-2px);
+            }
+
+    .btn-voice-start {
+        background: linear-gradient(135deg, #ffc107, #ffb300);
+        color: #111;
+    }
+
+        .btn-voice-start:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-voice-start.active {
+            animation: pulse-voice-btn 1s ease-in-out infinite;
+        }
+
+    @@keyframes pulse-voice-btn {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(255,193,7,0.1);
+        }
+
+        50% {
+            box-shadow: 0 0 40px rgba(255,193,7,0.3);
+        }
+    }
+
+    .btn-voice-stop {
+        background: linear-gradient(135deg, #ff4757, #c0392b);
+        color: #fff;
+    }
+
+    .btn-voice-clear {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.03);
+        color: rgba(255,255,255,0.3);
+    }
+
+        .btn-voice-clear:hover {
+            border-color: rgba(255,255,255,0.06);
+            color: #fff;
+        }
+
+    .btn-voice-copy {
+        background: rgba(0,207,255,0.05);
+        border: 1px solid rgba(0,207,255,0.05);
+        color: #00CFFF;
+    }
+
+        .btn-voice-copy:hover {
+            border-color: #00CFFF;
+            background: rgba(0,207,255,0.08);
+        }
+
+    .voice-close {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.03);
+        color: rgba(255,255,255,0.2);
+        flex: 1;
+    }
+
+        .voice-close:hover {
+            border-color: rgba(255,255,255,0.06);
+            color: #fff;
+        }
 
     .product-grid {
         display: grid;
@@ -138,7 +380,7 @@
         border-radius: 20px;
         padding: 20px 20px 25px;
         transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        cursor: pointer;
+        cursor: default;
         display: flex;
         flex-direction: column;
         position: relative;
@@ -391,6 +633,10 @@
         .categories-grid {
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         }
+
+        .voice-modal-content {
+            padding: 25px;
+        }
     }
 
     @@media (max-width: 480px) {
@@ -419,6 +665,15 @@
             font-size: 0.6rem;
             padding: 6px 10px;
         }
+
+        .voice-buttons {
+            flex-direction: column;
+        }
+
+            .voice-buttons button {
+                width: 100%;
+                justify-content: center;
+            }
     }
 </style>
 
@@ -441,6 +696,10 @@
                     <a asp-controller="Tienda" asp-action="Index" class="btn-hero-secondary">
                         <i class="bi bi-grid-3x3-gap-fill"></i> Ver todos
                     </a>
+                    <!-- ⭐ BOTÓN DE VOZ ⭐ -->
+                    <button id="openVoiceModalBtn" class="btn-voice">
+                        <i class="bi bi-mic"></i> Voz
+                    </button>
                 </div>
             </div>
             <div class="col-lg-5 text-center" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
@@ -557,9 +816,56 @@
     </div>
 </div>
 
+<!-- ⭐ MODAL DE RECONOCIMIENTO DE VOZ ⭐ -->
+<div id="voiceModal" class="voice-modal">
+    <div class="voice-modal-content">
+        <div class="voice-header">
+            <h2>🎤 Buscar por voz</h2>
+            <button id="closeVoiceModalBtn" class="btn-close-voice">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <p style="color: rgba(255,255,255,0.3); font-size: 0.85rem; margin-bottom: 15px;">
+            Habla para buscar productos en NEO STORE.
+        </p>
+
+        <div id="voiceStatus" class="voice-status">
+            Estado: esperando iniciar el micrófono.
+        </div>
+
+        <textarea id="voiceText" class="voice-textarea" placeholder="Aquí aparecerá el texto reconocido por voz..."></textarea>
+
+        <div id="voicePreview" class="voice-preview"></div>
+
+        <div class="voice-buttons">
+            <button id="voiceStartBtn" class="btn-voice-start">🎙️ Iniciar voz</button>
+            <button id="voiceStopBtn" class="btn-voice-stop">⏹️ Detener</button>
+            <button id="voiceClearBtn" class="btn-voice-clear">🧹 Limpiar</button>
+            <button id="voiceCopyBtn" class="btn-voice-copy">📋 Copiar</button>
+            <button id="voiceSearchBtn" class="btn-voice-start" style="background: linear-gradient(135deg, #00CFFF, #7A00FF); color: #fff; flex: 1;">
+                <i class="bi bi-search"></i> Buscar
+            </button>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <button id="voiceCloseBtn" class="btn-voice-clear" style="width: 100%; padding: 12px;">
+                <i class="bi bi-x-circle"></i> Cerrar
+            </button>
+        </div>
+
+        <div style="margin-top: 12px; font-size: 0.7rem; color: rgba(255,255,255,0.05); text-align: center;">
+            Recomendado para Google Chrome o Microsoft Edge
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        // ============================================
+        // AGREGAR AL CARRITO
+        // ============================================
         $('.add-to-cart').click(function() {
             var btn = $(this);
             var productoId = btn.data('id');
@@ -584,6 +890,244 @@
                     btn.html(originalText);
                     btn.prop('disabled', false);
                 });
+        });
+
+        // ============================================
+        // RECONOCIMIENTO DE VOZ
+        // ============================================
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        const voiceModal = document.getElementById('voiceModal');
+        const openVoiceBtn = document.getElementById('openVoiceModalBtn');
+        const closeVoiceBtn = document.getElementById('closeVoiceModalBtn');
+        const voiceCloseBtn = document.getElementById('voiceCloseBtn');
+
+        const voiceStatus = document.getElementById('voiceStatus');
+        const voiceText = document.getElementById('voiceText');
+        const voicePreview = document.getElementById('voicePreview');
+
+        const voiceStartBtn = document.getElementById('voiceStartBtn');
+        const voiceStopBtn = document.getElementById('voiceStopBtn');
+        const voiceClearBtn = document.getElementById('voiceClearBtn');
+        const voiceCopyBtn = document.getElementById('voiceCopyBtn');
+        const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+
+        let recognition = null;
+        let escuchando = false;
+
+        // Abrir modal
+        openVoiceBtn.addEventListener('click', function() {
+            voiceModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Cerrar modal
+        function closeVoiceModal() {
+            voiceModal.classList.remove('active');
+            document.body.style.overflow = '';
+            if (escuchando) {
+                detenerVoz();
+            }
+        }
+
+        closeVoiceBtn.addEventListener('click', closeVoiceModal);
+        voiceCloseBtn.addEventListener('click', closeVoiceModal);
+
+        // Cerrar con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVoiceModal();
+            }
+        });
+
+        // Cerrar click fuera
+        voiceModal.addEventListener('click', function(e) {
+            if (e.target === voiceModal) {
+                closeVoiceModal();
+            }
+        });
+
+        function cambiarEstado(mensaje, tipo) {
+            voiceStatus.innerText = mensaje;
+            voiceStatus.classList.remove('ok', 'error');
+
+            if (tipo === 'ok') {
+                voiceStatus.classList.add('ok');
+            }
+            if (tipo === 'error') {
+                voiceStatus.classList.add('error');
+            }
+        }
+
+        function iniciarVoz() {
+            if (!SpeechRecognition) {
+                cambiarEstado('Tu navegador no soporta Web Speech API. Prueba en Chrome o Edge.', 'error');
+                voiceStartBtn.disabled = true;
+                return;
+            }
+
+            if (escuchando) {
+                cambiarEstado('El micrófono ya está escuchando.', 'ok');
+                return;
+            }
+
+            if (!recognition) {
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-ES';
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.maxAlternatives = 1;
+
+                recognition.onstart = function() {
+                    escuchando = true;
+                    voiceStartBtn.classList.add('active');
+                    voiceStartBtn.textContent = '🎙️ Escuchando...';
+                    cambiarEstado('🎤 Escuchando... habla claramente al micrófono.', 'ok');
+                };
+
+                recognition.onresult = function(event) {
+                    let textoFinal = '';
+                    let textoTemporal = '';
+
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const texto = event.results[i][0].transcript;
+
+                        if (event.results[i].isFinal) {
+                            textoFinal += texto + ' ';
+                        } else {
+                            textoTemporal += texto;
+                        }
+                    }
+
+                    if (textoFinal.trim() !== '') {
+                        const textoActual = voiceText.value.trim();
+
+                        if (textoActual === '') {
+                            voiceText.value = textoFinal.trim();
+                        } else {
+                            voiceText.value = textoActual + ' ' + textoFinal.trim();
+                        }
+
+                        voiceText.scrollTop = voiceText.scrollHeight;
+                        voicePreview.innerText = '';
+                    } else {
+                        voicePreview.innerText = 'Escuchando: ' + textoTemporal;
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    voiceStartBtn.classList.remove('active');
+                    voiceStartBtn.textContent = '🎙️ Iniciar voz';
+
+                    if (event.error === 'not-allowed') {
+                        cambiarEstado('Permiso de micrófono denegado. Activa el permiso del navegador.', 'error');
+                    } else if (event.error === 'no-speech') {
+                        cambiarEstado('No se detectó voz. Intenta hablar más cerca del micrófono.', 'error');
+                    } else {
+                        cambiarEstado('Error de reconocimiento: ' + event.error, 'error');
+                    }
+                };
+
+                recognition.onend = function() {
+                    voiceStartBtn.classList.remove('active');
+                    voiceStartBtn.textContent = '🎙️ Iniciar voz';
+
+                    if (escuchando) {
+                        try {
+                            recognition.start();
+                        } catch (error) {
+                            cambiarEstado('El micrófono se detuvo. Presiona iniciar otra vez.', 'error');
+                            escuchando = false;
+                        }
+                    } else {
+                        cambiarEstado('Estado: micrófono detenido.');
+                    }
+                };
+            }
+
+            try {
+                escuchando = true;
+                recognition.start();
+            } catch (error) {
+                cambiarEstado('No se pudo iniciar el micrófono. Intenta nuevamente.', 'error');
+            }
+        }
+
+        function detenerVoz() {
+            escuchando = false;
+            voicePreview.innerText = '';
+            voiceStartBtn.classList.remove('active');
+            voiceStartBtn.textContent = '🎙️ Iniciar voz';
+
+            if (recognition) {
+                try {
+                    recognition.stop();
+                } catch (e) {}
+            }
+
+            cambiarEstado('Estado: micrófono detenido.');
+        }
+
+        voiceStartBtn.addEventListener('click', iniciarVoz);
+
+        voiceStopBtn.addEventListener('click', function() {
+            detenerVoz();
+        });
+
+        voiceClearBtn.addEventListener('click', function() {
+            voiceText.value = '';
+            voicePreview.innerText = '';
+            cambiarEstado('Texto limpiado. Puedes iniciar una nueva prueba.', 'ok');
+        });
+
+        voiceCopyBtn.addEventListener('click', async function() {
+            const texto = voiceText.value.trim();
+
+            if (texto === '') {
+                cambiarEstado('No hay texto para copiar.', 'error');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(texto);
+                cambiarEstado('Texto copiado al portapapeles.', 'ok');
+            } catch (error) {
+                voiceText.select();
+                document.execCommand('copy');
+                cambiarEstado('Texto copiado.', 'ok');
+            }
+        });
+
+        voiceSearchBtn.addEventListener('click', function() {
+            const texto = voiceText.value.trim();
+
+            if (texto === '') {
+                cambiarEstado('No hay texto para buscar.', 'error');
+                return;
+            }
+
+            // Redirigir a la tienda con el texto de búsqueda
+            window.location.href = '/Tienda/Index?searchString=' + encodeURIComponent(texto);
+        });
+
+        // ============================================
+        // VOZ POR TECLADO - ENTER
+        // ============================================
+        voiceText.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                voiceSearchBtn.click();
+            }
+        });
+
+        // ============================================
+        // VOZ POR TECLADO - Ctrl+Enter
+        // ============================================
+        voiceText.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                e.preventDefault();
+                voiceSearchBtn.click();
+            }
         });
     });
 </script>

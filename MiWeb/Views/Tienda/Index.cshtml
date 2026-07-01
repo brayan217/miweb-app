@@ -122,11 +122,11 @@
             box-shadow: 0 0 30px rgba(0,207,255,0.03);
         }
 
-    /* ⭐ BOTÓN DE VOZ ⭐ */
+    /* ⭐ BOTÓN DE VOZ - COLORES NEO STORE ⭐ */
     .btn-voice {
         background: transparent;
-        border: 1px solid rgba(255,255,255,0.04);
-        color: rgba(255,255,255,0.3);
+        border: 1px solid rgba(0,207,255,0.15);
+        color: #00CFFF;
         border-radius: 50px;
         padding: 16px 45px;
         font-weight: 600;
@@ -138,18 +138,23 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        cursor: pointer;
+        background: rgba(0,207,255,0.03);
     }
 
         .btn-voice:hover {
             border-color: #00CFFF;
             color: #fff;
-            box-shadow: 0 0 30px rgba(0,207,255,0.03);
+            box-shadow: 0 0 40px rgba(0,207,255,0.08);
+            background: rgba(0,207,255,0.06);
+            transform: translateY(-3px);
         }
 
         .btn-voice.active {
             border-color: #ffc107;
             color: #ffc107;
             animation: pulse-voice 1.5s ease-in-out infinite;
+            background: rgba(255,193,7,0.05);
         }
 
     @@keyframes pulse-voice {
@@ -167,7 +172,7 @@
         filter: drop-shadow(0 0 80px rgba(0,207,255,0.04));
     }
 
-    /* ⭐ MODAL DE VOZ ⭐ */
+    /* ⭐ MODAL DE VOZ - COLORES NEO STORE ⭐ */
     .voice-modal {
         display: none;
         position: fixed;
@@ -191,7 +196,7 @@
         width: 100%;
         max-width: 600px;
         background: rgba(18, 18, 30, 0.8);
-        border: 1px solid rgba(255,193,7,0.15);
+        border: 1px solid rgba(0,207,255,0.08);
         border-radius: 28px;
         padding: 40px;
         box-shadow: 0 30px 80px rgba(0,0,0,0.6);
@@ -205,11 +210,19 @@
         }
 
             .voice-modal-content .voice-header h2 {
-                color: #ffc107;
+                background: linear-gradient(135deg, #00CFFF, #7A00FF);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
                 font-size: 1.5rem;
                 font-weight: 900;
                 margin: 0;
             }
+
+                .voice-modal-content .voice-header h2 i {
+                    -webkit-text-fill-color: initial;
+                    color: #00CFFF;
+                    margin-right: 8px;
+                }
 
             .voice-modal-content .voice-header .btn-close-voice {
                 background: rgba(255,255,255,0.03);
@@ -232,11 +245,11 @@
                 }
 
     .voice-status {
-        background: rgba(255,193,7,0.05);
-        border: 1px solid rgba(255,193,7,0.1);
+        background: rgba(0,207,255,0.03);
+        border: 1px solid rgba(0,207,255,0.06);
         border-radius: 16px;
         padding: 12px 18px;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255,255,255,0.4);
         font-size: 0.85rem;
         margin-bottom: 20px;
     }
@@ -259,23 +272,24 @@
         resize: vertical;
         background: rgba(0,0,0,0.3);
         color: #fff;
-        border: 1px solid rgba(255,255,255,0.03);
+        border: 1px solid rgba(0,207,255,0.05);
         border-radius: 16px;
         padding: 18px;
         outline: none;
         font-size: 16px;
         line-height: 1.6;
         font-family: inherit;
+        transition: border-color 0.3s ease;
     }
 
         .voice-textarea:focus {
-            border-color: rgba(255,193,7,0.2);
-            box-shadow: 0 0 0 3px rgba(255,193,7,0.05);
+            border-color: rgba(0,207,255,0.2);
+            box-shadow: 0 0 0 3px rgba(0,207,255,0.05);
         }
 
     .voice-preview {
         min-height: 28px;
-        color: rgba(255,255,255,0.2);
+        color: rgba(255,255,255,0.15);
         margin-top: 12px;
         font-style: italic;
         font-size: 0.85rem;
@@ -304,18 +318,28 @@
                 transform: translateY(-2px);
             }
 
+    /* ⭐ BOTÓN INICIAR VOZ - NEO STORE ⭐ */
     .btn-voice-start {
-        background: linear-gradient(135deg, #ffc107, #ffb300);
-        color: #111;
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
+        color: #fff;
+        border: 1px solid transparent;
     }
+
+        .btn-voice-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0,207,255,0.15);
+        }
 
         .btn-voice-start:disabled {
             opacity: 0.3;
             cursor: not-allowed;
             transform: none !important;
+            box-shadow: none !important;
         }
 
         .btn-voice-start.active {
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            color: #111;
             animation: pulse-voice-btn 1s ease-in-out infinite;
         }
 
@@ -329,13 +353,21 @@
         }
     }
 
+    /* ⭐ BOTÓN DETENER - NEO STORE ⭐ */
     .btn-voice-stop {
-        background: linear-gradient(135deg, #ff4757, #c0392b);
-        color: #fff;
+        background: rgba(255,71,87,0.1);
+        border: 1px solid rgba(255,71,87,0.1);
+        color: #ff4757;
     }
 
+        .btn-voice-stop:hover {
+            background: rgba(255,71,87,0.15);
+            border-color: #ff4757;
+        }
+
+    /* ⭐ BOTÓN LIMPIAR - NEO STORE ⭐ */
     .btn-voice-clear {
-        background: rgba(255,255,255,0.03);
+        background: rgba(255,255,255,0.02);
         border: 1px solid rgba(255,255,255,0.03);
         color: rgba(255,255,255,0.3);
     }
@@ -343,8 +375,10 @@
         .btn-voice-clear:hover {
             border-color: rgba(255,255,255,0.06);
             color: #fff;
+            background: rgba(255,255,255,0.03);
         }
 
+    /* ⭐ BOTÓN COPIAR - NEO STORE ⭐ */
     .btn-voice-copy {
         background: rgba(0,207,255,0.05);
         border: 1px solid rgba(0,207,255,0.05);
@@ -354,18 +388,43 @@
         .btn-voice-copy:hover {
             border-color: #00CFFF;
             background: rgba(0,207,255,0.08);
+            box-shadow: 0 0 30px rgba(0,207,255,0.05);
         }
 
-    .voice-close {
+    /* ⭐ BOTÓN BUSCAR - NEO STORE ⭐ */
+    .btn-voice-search {
+        background: linear-gradient(135deg, #00CFFF, #7A00FF);
+        color: #fff;
+        border: none;
+        flex: 1;
+        min-width: 120px;
+    }
+
+        .btn-voice-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0,207,255,0.15);
+        }
+
+    /* ⭐ BOTÓN CERRAR - NEO STORE ⭐ */
+    .btn-voice-close-modal {
         background: rgba(255,255,255,0.02);
         border: 1px solid rgba(255,255,255,0.03);
         color: rgba(255,255,255,0.2);
-        flex: 1;
+        width: 100%;
+        padding: 12px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
-        .voice-close:hover {
+        .btn-voice-close-modal:hover {
             border-color: rgba(255,255,255,0.06);
             color: #fff;
+            background: rgba(255,255,255,0.02);
         }
 
     .product-grid {
@@ -432,7 +491,7 @@
 
             .product-item .product-image-fallback i {
                 font-size: 3.5rem;
-                color: rgba(255,0,68,0.08);
+                color: rgba(0,207,255,0.05);
                 margin-bottom: 8px;
             }
 
@@ -696,7 +755,7 @@
                     <a asp-controller="Tienda" asp-action="Index" class="btn-hero-secondary">
                         <i class="bi bi-grid-3x3-gap-fill"></i> Ver todos
                     </a>
-                    <!-- ⭐ BOTÓN DE VOZ ⭐ -->
+                    <!-- ⭐ BOTÓN DE VOZ - NEO STORE ⭐ -->
                     <button id="openVoiceModalBtn" class="btn-voice">
                         <i class="bi bi-mic"></i> Voz
                     </button>
@@ -820,7 +879,7 @@
 <div id="voiceModal" class="voice-modal">
     <div class="voice-modal-content">
         <div class="voice-header">
-            <h2>🎤 Buscar por voz</h2>
+            <h2><i class="bi bi-mic"></i>Buscar por voz</h2>
             <button id="closeVoiceModalBtn" class="btn-close-voice">
                 <i class="bi bi-x-lg"></i>
             </button>
@@ -843,13 +902,13 @@
             <button id="voiceStopBtn" class="btn-voice-stop">⏹️ Detener</button>
             <button id="voiceClearBtn" class="btn-voice-clear">🧹 Limpiar</button>
             <button id="voiceCopyBtn" class="btn-voice-copy">📋 Copiar</button>
-            <button id="voiceSearchBtn" class="btn-voice-start" style="background: linear-gradient(135deg, #00CFFF, #7A00FF); color: #fff; flex: 1;">
+            <button id="voiceSearchBtn" class="btn-voice-search">
                 <i class="bi bi-search"></i> Buscar
             </button>
         </div>
 
         <div style="margin-top: 15px;">
-            <button id="voiceCloseBtn" class="btn-voice-clear" style="width: 100%; padding: 12px;">
+            <button id="voiceCloseBtn" class="btn-voice-close-modal">
                 <i class="bi bi-x-circle"></i> Cerrar
             </button>
         </div>
